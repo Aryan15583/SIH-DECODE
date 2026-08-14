@@ -1,0 +1,16 @@
+Frontend
+[ ] Next.js setup
+[ ] Dashboard
+[ ] AI Agents
+[ ] Live Threats
+[ ] Incident Investigation
+[ ] Threat Prediction
+[ ] Attack Graph
+[ ] Risk Center
+[ ] Reports
+[ ] Network Map
+[ ] Charts & visualizations
+[ ] Real-time threat updates
+[ ] Responsive UI
+[ ] API integration
+[ ] Final UI testing
