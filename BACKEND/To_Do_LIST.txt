@@ -1,0 +1,22 @@
+Backend
+[ ] FastAPI setup
+[ ] PostgreSQL + MongoDB
+[ ] Database models
+[ ] REST APIs
+[ ] WebSockets
+[ ] Authentication & authorization
+[ ] Security-event ingestion
+[ ] Threat Detection
+[ ] Event Correlation
+[ ] Threat Intelligence
+[ ] Incident Investigation
+[ ] Threat Prediction
+[ ] Risk Scoring
+[ ] Multi-Agent Orchestration
+[ ] Response/Remediation
+[ ] Human Approval for critical actions
+[ ] Automated Report Generation
+[ ] ML/LLM integration
+[ ] Logging & monitoring
+[ ] API testing
+[ ] Frontend integration
