@@ -1,0 +1,19 @@
+PROJECT             AegisSOC AI
+                         │
+             ┌───────────┴───────────┐
+             │                       │
+       NEXT.JS FRONTEND        FASTAPI BACKEND
+             │                       │
+       Dashboard UI             REST APIs
+       AI Agents UI             WebSockets
+       Threat UI                AI Agents
+       Reports UI               ML Models
+       Attack Graph             Risk Engine
+       Risk Center              Threat Detection
+             │                       │
+             └───────────┬───────────┘
+                         │
+                  DATABASE LAYER
+                 ┌───────┴────────┐
+                 │                │
+             PostgreSQL        MongoDB
