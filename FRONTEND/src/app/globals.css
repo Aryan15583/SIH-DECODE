@@ -1,21 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --bg-0: #060d16;
-  --bg-1: #08111c;
-  --bg-2: #0b1420;
-  --surface-1: #101c29;
-  --surface-2: #132231;
-  --border-1: #243548;
-  --border-2: #2c4054;
-  --primary: #5865f2;
-  --secondary: #7c5cff;
-  --cyber-blue: #22b8f0;
-  --success: #39d98a;
-  --warning: #f5b942;
-  --danger: #ff4d5a;
-  --text-1: #f5f7fa;
-  --text-2: #8d9aaa;
+  --bg-0: #050507;
+  --bg-1: #0D0D14;
+  --bg-2: #08080D;
+  --surface-1: #0D0D14;
+  --surface-2: #11111A;
+  --border-1: rgba(255, 255, 255, 0.07);
+  --border-2: rgba(255, 255, 255, 0.12);
+  --primary: #A78BFA;
+  --secondary: #8B6FE8;
+  --cyber-blue: #C4B5FD;
+  --success: #789B84;
+  --warning: #D88A5B;
+  --danger: #E06C75;
+  --text-1: #F4F2F8;
+  --text-2: #A7A3AE;
+
+  /* Chart Variable tokens */
+  --chart-grid: rgba(255, 255, 255, 0.05);
+  --chart-tick: #6F6B76;
+  --chart-axis: rgba(255, 255, 255, 0.07);
+  --chart-tooltip-bg: #0D0D14;
+  --chart-tooltip-border: rgba(255, 255, 255, 0.12);
+  --chart-primary: #A78BFA;
+  --chart-secondary: #8B6FE8;
+
+  /* Graph Variable tokens */
+  --graph-medium: #A78BFA;
+  --graph-info: #C4B5FD;
+  --graph-low: #7FA889;
+  --graph-default: rgba(255, 255, 255, 0.15);
 }
 
 @theme inline {
@@ -50,8 +65,8 @@ body {
   color: var(--text-1);
   font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   background-image:
-    radial-gradient(1200px 600px at 15% -10%, rgba(88, 101, 242, 0.10), transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, rgba(124, 92, 255, 0.08), transparent 55%);
+    radial-gradient(1200px 600px at 15% -10%, rgba(167, 139, 250, 0.08), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(139, 111, 232, 0.06), transparent 55%);
 }
 
 ::-webkit-scrollbar {
@@ -70,7 +85,7 @@ body {
 }
 
 .glow-primary {
-  box-shadow: 0 0 0 1px rgba(88, 101, 242, 0.35), 0 0 24px rgba(88, 101, 242, 0.18);
+  box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.25), 0 0 24px rgba(167, 139, 250, 0.12);
 }
 
 .card-surface {
@@ -99,4 +114,351 @@ body {
 }
 .animate-fade-up {
   animation: fade-up 0.35s ease-out both;
+}
+
+/* Light Mode Variables Override (Warm Cream Editorial Cybersecurity Theme) */
+:root.light {
+  --bg-0: #F5F1E8;
+  --bg-1: #FAF8F3;
+  --bg-2: #EEE9DF;
+  --surface-1: #FAF8F3;
+  --surface-2: #FAF8F3;
+  --border-1: rgba(24, 22, 28, 0.10);
+  --border-2: rgba(24, 22, 28, 0.16);
+  --text-1: #18161C;
+  --text-2: #706B74;
+  --primary: #7657C8;
+  --secondary: #6044A8;
+  --cyber-blue: #9B83D8;
+  --success: #7657C8;
+  --warning: #b88d22;
+  --danger: #d63e4b;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+html.light body {
+  background: #F5F1E8 !important;
+  color: #18161C !important;
+  background-image:
+    radial-gradient(circle at 50% 20%, rgba(118, 87, 200, 0.07), transparent 40%) !important;
+}
+
+/* Light Mode Overrides for Hardcoded Landing Page Classes */
+.light .bg-\[\#050507\] {
+  background-color: #F5F1E8 !important;
+}
+.light .bg-\[\#050507\]\/75 {
+  background-color: rgba(245, 241, 232, 0.75) !important;
+}
+.light .bg-\[\#050507\]\/90 {
+  background-color: rgba(245, 241, 232, 0.9) !important;
+}
+.light .bg-\[\#08080D\] {
+  background-color: #EEE9DF !important;
+}
+.light .bg-\[\#0D0D14\] {
+  background-color: #FAF8F3 !important;
+}
+.light .bg-\[\#0D0D14\]\/30 {
+  background-color: rgba(250, 248, 243, 0.3) !important;
+}
+.light .bg-\[\#0D0D14\]\/40 {
+  background-color: rgba(250, 248, 243, 0.4) !important;
+}
+.light .bg-\[\#0D0D14\]\/50 {
+  background-color: rgba(250, 248, 243, 0.5) !important;
+}
+.light .bg-\[\#0D0D14\]\/60 {
+  background-color: rgba(250, 248, 243, 0.6) !important;
+}
+.light .bg-\[\#0D0D14\]\/70 {
+  background-color: rgba(250, 248, 243, 0.7) !important;
+}
+.light .bg-\[\#0D0D14\]\/80 {
+  background-color: rgba(250, 248, 243, 0.8) !important;
+}
+.light .bg-\[\#0D0D14\]\/95 {
+  background-color: rgba(250, 248, 243, 0.95) !important;
+}
+.light .bg-white\/5 {
+  background-color: rgba(118, 87, 200, 0.03) !important;
+}
+
+/* Border overrides */
+.light .border-white\/5,
+.light .border-white\/8,
+.light .border-white\/10 {
+  border-color: rgba(24, 22, 28, 0.10) !important;
+}
+
+/* Text overrides */
+.light .text-\[\#F5F5F7\] {
+  color: #18161C !important;
+}
+.light .text-\[\#92929F\] {
+  color: #706B74 !important;
+}
+.light .text-white\/40 {
+  color: rgba(24, 22, 28, 0.4) !important;
+}
+
+/* SVGs and specific landing components */
+.light .text-white\/\[0\.02\] {
+  color: rgba(24, 22, 28, 0.02) !important;
+}
+.light .bg-gradient-to-b.from-white\/\[0\.03\] {
+  background-image: linear-gradient(to bottom, rgba(24, 22, 28, 0.03), transparent) !important;
+}
+.light .from-white\/\[0\.03\] {
+  --tw-gradient-from: rgba(24, 22, 28, 0.03) !important;
+}
+
+/* Product Intro Hover Override */
+.light .hover\:bg-\[\#0D0D14\]\/60:hover {
+  background-color: #FAF8F3 !important;
+  border-color: rgba(118, 87, 200, 0.28) !important;
+  box-shadow: 0 20px 60px rgba(30, 25, 35, 0.05) !important;
+}
+
+/* Navbar CTA Button (bg-[#0D0D14]) Override */
+.light header .bg-\[\#0D0D14\] {
+  background-color: #18161C !important;
+  color: #FAF8F3 !important;
+  border-color: transparent !important;
+}
+.light header .bg-\[\#0D0D14\]:hover {
+  background-color: #7657C8 !important;
+  color: #ffffff !important;
+}
+
+/* Hero CTA Button (bg-[#8B5CF6]) Override */
+.light .bg-\[\#8B5CF6\] {
+  background-color: #18161C !important;
+  color: #FAF8F3 !important;
+  box-shadow: none !important;
+}
+.light .bg-\[\#8B5CF6\]:hover {
+  background-color: #7657C8 !important;
+}
+
+/* Secondary CTA Outline Override */
+.light .border-white\/8.bg-\[\#0D0D14\]\/50 {
+  background-color: transparent !important;
+  border-color: rgba(24, 22, 28, 0.12) !important;
+  color: #18161C !important;
+}
+.light .border-white\/8.bg-\[\#0D0D14\]\/50:hover {
+  background-color: rgba(24, 22, 28, 0.03) !important;
+  color: #18161C !important;
+}
+
+/* Navbar text items & scroll blur */
+.light header {
+  border-color: rgba(24, 22, 28, 0.08) !important;
+}
+.light header.bg-\[\#050507\]\/75 {
+  background-color: rgba(250, 248, 243, 0.82) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+/* Main Eyebrows (tracking-[0.2em]) */
+.light .tracking-\[0\.2em\] {
+  color: #7657C8 !important;
+}
+
+/* Hero Horizon Paths */
+.light #horizon-gradient stop:nth-child(1) { stop-color: #9B83D8 !important; stop-opacity: 0 !important; }
+.light #horizon-gradient stop:nth-child(2) { stop-color: #9B83D8 !important; stop-opacity: 0.3 !important; }
+.light #horizon-gradient stop:nth-child(3) { stop-color: #7657C8 !important; stop-opacity: 0.8 !important; }
+.light #horizon-gradient stop:nth-child(4) { stop-color: #6044A8 !important; stop-opacity: 0.3 !important; }
+.light #horizon-gradient stop:nth-child(5) { stop-color: #6044A8 !important; stop-opacity: 0 !important; }
+
+.light #horizon-glow stop:nth-child(1) { stop-color: #7657C8 !important; stop-opacity: 0 !important; }
+.light #horizon-glow stop:nth-child(2) { stop-color: #7657C8 !important; stop-opacity: 0.3 !important; }
+.light #horizon-glow stop:nth-child(3) { stop-color: #7657C8 !important; stop-opacity: 0 !important; }
+
+.light .absolute.top-\[80px\].left-1\/2.bg-gradient-to-t.from-\[\#8B5CF6\]\/10 {
+  background-image: linear-gradient(to top, rgba(118, 87, 200, 0.12), transparent) !important;
+}
+
+/* Hero Faint Grid Lines */
+.light .absolute.inset-0.bg-\[linear-gradient\(to_right\,rgba\(255\,255\,255\,0\.015\)_1px\,transparent_1px\)\,linear-gradient\(to_bottom\,rgba\(255\,255\,255\,0\.015\)_1px\,transparent_1px\)\] {
+  background-image:
+    linear-gradient(to right, rgba(24, 22, 28, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(24, 22, 28, 0.035) 1px, transparent 1px) !important;
+}
+
+/* Dashboard Showcase Browser Frame */
+.light .max-w-5xl.border-white\/8.bg-\[\#050507\] {
+  background-color: #FAF8F3 !important;
+  border-color: rgba(24, 22, 28, 0.12) !important;
+  box-shadow: 0 30px 100px rgba(30, 25, 35, 0.09) !important;
+}
+.light .flex-1.max-w-md.bg-\[\#050507\] {
+  background-color: #EEE9DF !important;
+  border-color: rgba(24, 22, 28, 0.10) !important;
+}
+
+/* Status Badge Overrides in AIAgents (Light Mode) */
+.light .border-\[\#39d98a\]\/20 {
+  border-color: rgba(118, 87, 200, 0.20) !important;
+}
+.light .bg-\[\#39d98a\]\/5 {
+  background-color: #E9E2F7 !important;
+}
+.light .text-\[\#39d98a\] {
+  color: #7657C8 !important;
+}
+.light .bg-\[\#39d98a\] {
+  background-color: #7657C8 !important;
+}
+/* Connecting lines and pulses */
+.light .from-\[\#A78BFA\]\/40 {
+  --tw-gradient-from: rgba(118, 87, 200, 0.20) !important;
+}
+.light .via-white\/10 {
+  --tw-gradient-to: rgba(118, 87, 200, 0.10) !important;
+}
+.light .to-\[\#8B5CF6\]\/40 {
+  --tw-gradient-to: rgba(118, 87, 200, 0.20) !important;
+}
+.light .via-\[\#A78BFA\] {
+  --tw-gradient-to: #7657C8 !important;
+}
+.light .shadow-\[0_0_8px_\#A78BFA\] {
+  box-shadow: 0 0 8px rgba(118, 87, 200, 0.4) !important;
+}
+
+/* Threat Prediction Overrides */
+.light .text-\[\#A78BFA\] {
+  color: #7657C8 !important;
+}
+.light .from-\[\#8B5CF6\]\/60 {
+  --tw-gradient-from: #9B83D8 !important;
+}
+.light .to-\[\#A78BFA\] {
+  --tw-gradient-to: #6044A8 !important;
+}
+
+/* Attack Graph Overrides */
+.light .border-white\/10 {
+  border-color: rgba(118, 87, 200, 0.30) !important;
+}
+.light .border-\[\#A78BFA\] {
+  border-color: #7657C8 !important;
+}
+.light .w-10.h-10.text-\[\#92929F\] {
+  color: #7657C8 !important;
+}
+.light svg line[stroke="#A78BFA"] {
+  stroke: rgba(118, 87, 200, 0.18) !important;
+}
+.light svg line[stroke="#8B5CF6"] {
+  stroke: rgba(118, 87, 200, 0.18) !important;
+}
+
+/* Final CTA Section background transition */
+.light #final-cta {
+  background-color: #EEE9DF !important;
+}
+
+/* Footer Section Overrides */
+.light footer {
+  background-color: #EEE9DF !important;
+  border-color: rgba(24, 22, 28, 0.08) !important;
+}
+
+/* Footer Giant Brand Text Contrast */
+.light footer h2 {
+  background-image: linear-gradient(to bottom, rgba(24, 22, 28, 0.04), transparent) !important;
+  color: transparent !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+}
+
+/* Muted violet hover underline overlays */
+.light .bg-\[\#A78BFA\] {
+  background-color: #7657C8 !important;
+}
+
+/* Global Smooth Theme Toggle Transition */
+body, 
+section, 
+header, 
+footer, 
+aside,
+main,
+.card-surface {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              background-image 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Recharts Area Chart Theme Overrides */
+.recharts-cartesian-grid line {
+  stroke: var(--chart-grid) !important;
+}
+.recharts-cartesian-axis-tick text {
+  fill: var(--chart-tick) !important;
+}
+.recharts-cartesian-axis-line {
+  stroke: var(--chart-axis) !important;
+}
+#threatFill stop {
+  stop-color: var(--chart-primary) !important;
+}
+.recharts-area-path {
+  stroke: var(--chart-primary) !important;
+}
+.recharts-default-tooltip {
+  background-color: var(--chart-tooltip-bg) !important;
+  border-color: var(--chart-tooltip-border) !important;
+}
+.recharts-default-tooltip .recharts-tooltip-label {
+  color: var(--text-2) !important;
+}
+.recharts-default-tooltip .recharts-tooltip-item {
+  color: var(--text-1) !important;
+}
+
+/* Dashboard Sidebar & Dropdown Hovers and Glow Overrides */
+.glow-primary {
+  box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.25), 0 0 24px rgba(167, 139, 250, 0.12) !important;
+}
+.light .glow-primary {
+  box-shadow: 0 0 0 1px rgba(118, 87, 200, 0.20), 0 4px 16px rgba(118, 87, 200, 0.08) !important;
+}
+.hover\:bg-white\/5:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+.light .hover\:bg-white\/5:hover {
+  background-color: rgba(24, 22, 28, 0.04) !important;
+}
+
+/* Attack Graph Canvas Overrides in Dashboard */
+svg line[stroke="#5865f2"] {
+  stroke: var(--graph-medium) !important;
+}
+svg line[stroke="#22b8f0"] {
+  stroke: var(--graph-info) !important;
+}
+svg line[stroke="#39d98a"] {
+  stroke: var(--graph-low) !important;
+}
+svg line[stroke="#3a5170"] {
+  stroke: var(--graph-default) !important;
+}
+svg marker path {
+  fill: var(--text-2) !important;
+  opacity: 0.35 !important;
+}
+
+/* Sidebar Width Smooth Transition Override */
+aside.hidden.lg\:flex {
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }

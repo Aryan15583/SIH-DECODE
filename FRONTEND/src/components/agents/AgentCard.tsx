@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/Card";
 import { StatusBadge } from "@/components/ui/Badge";
@@ -15,7 +16,6 @@ export function AgentCard({
   active?: boolean;
   onClick?: () => void;
 }) {
-  const Icon = getAgentIcon(agent.icon);
   return (
     <Card
       onClick={onClick}
@@ -27,7 +27,7 @@ export function AgentCard({
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-            <Icon className="h-5 w-5" />
+            {React.createElement(getAgentIcon(agent.icon), { className: "h-5 w-5" })}
           </span>
           <div>
             <p className="text-sm font-semibold text-text-1">{agent.name}</p>

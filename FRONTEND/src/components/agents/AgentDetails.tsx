@@ -1,3 +1,4 @@
+import React from "react";
 import { Card } from "@/components/ui/Card";
 import { StatusBadge } from "@/components/ui/Badge";
 import { getAgentIcon } from "./agent-icons";
@@ -14,13 +15,11 @@ export function AgentDetails({ agent }: { agent: Agent | null }) {
     );
   }
 
-  const Icon = getAgentIcon(agent.icon);
-
   return (
     <Card className="sticky top-20 p-5">
       <div className="flex items-center gap-3">
         <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-          <Icon className="h-6 w-6" />
+          {React.createElement(getAgentIcon(agent.icon), { className: "h-6 w-6" })}
         </span>
         <div>
           <p className="text-base font-semibold text-text-1">{agent.name}</p>

@@ -3,16 +3,23 @@ import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
 
 export const metadata: Metadata = {
-  title: "AegisSOC AI — Autonomous Security Operations",
+  metadataBase: new URL("https://aegissocai.vercel.app"),
+  title: {
+    default: "AegisSOC AI — Autonomous Cybersecurity Platform",
+    template: "%s | AegisSOC AI",
+  },
   description:
     "AegisSOC AI is an autonomous, multi-agent Security Operations Center platform for real-time threat detection, investigation and response.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -21,7 +28,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased min-h-screen">
+      <body className="antialiased min-h-screen" suppressHydrationWarning>
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

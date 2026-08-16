@@ -18,6 +18,16 @@ export default function DashboardPage() {
         ))}
       </div>
 
+      {/* Welcome Banner Card */}
+      <div className="card-surface p-5 rounded-xl border border-border-1 flex flex-col gap-1 select-none animate-fade-up">
+        <h2 className="text-lg font-bold text-text-1 lg:text-xl">
+          Welcome Back, <span className="text-primary">John Doe</span>
+        </h2>
+        <p className="text-xs text-text-2 lg:text-sm leading-relaxed">
+          Your autonomous security operations center is active. Monitor threat streams, AI containment timelines, and multi-agent operations.
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
         <Card className="xl:col-span-2">
           <CardHeader title="Live Threat Activity" subtitle="Security events observed across the last 24 hours" />
