@@ -31,6 +31,9 @@ export const metadata: Metadata = {
     description:
       "AegisSOC AI is an autonomous cybersecurity platform that detects threats, investigates incidents, predicts risks, and helps security teams respond faster.",
   },
+  verification: {
+    google: "0JsIGbSS8wVCGlPBlX346JJYHMi71mm9buXqCEpVz9Q",
+  },
 };
 
 export default function RootPage() {
