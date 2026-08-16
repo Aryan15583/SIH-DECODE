@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Shield } from "lucide-react";
+import { Shield, ArrowRight } from "lucide-react";
 
 export default function Footer() {
   const links = [
@@ -42,9 +42,15 @@ export default function Footer() {
                   <Link
                     key={lnk.name}
                     href={lnk.href}
-                    className="font-sans text-xs text-[#92929F] hover:text-[#F5F5F7] transition-colors"
+                    className="relative flex items-center font-sans text-xs text-[#92929F] hover:text-[#F5F5F7] py-0.5 group"
                   >
-                    {lnk.name}
+                    <span className="absolute left-0 opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex items-center shrink-0">
+                      <ArrowRight className="h-2.5 w-2.5 text-[#A78BFA]" />
+                    </span>
+                    <span className="relative transition-transform duration-300 group-hover:translate-x-3.5 py-0.5">
+                      {lnk.name}
+                      <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#A78BFA] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                    </span>
                   </Link>
                 ))}
               </div>
@@ -56,16 +62,28 @@ export default function Footer() {
               </span>
               <div className="flex flex-col gap-2.5">
                 <Link
-                  href="#privacy"
-                  className="font-sans text-xs text-[#92929F] hover:text-[#F5F5F7] transition-colors"
+                  href="/privacy"
+                  className="relative flex items-center font-sans text-xs text-[#92929F] hover:text-[#F5F5F7] py-0.5 group"
                 >
-                  Privacy Policy
+                  <span className="absolute left-0 opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex items-center shrink-0">
+                    <ArrowRight className="h-2.5 w-2.5 text-[#A78BFA]" />
+                  </span>
+                  <span className="relative transition-transform duration-300 group-hover:translate-x-3.5 py-0.5">
+                    Privacy Policy
+                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#A78BFA] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  </span>
                 </Link>
                 <Link
-                  href="#terms"
-                  className="font-sans text-xs text-[#92929F] hover:text-[#F5F5F7] transition-colors"
+                  href="/terms"
+                  className="relative flex items-center font-sans text-xs text-[#92929F] hover:text-[#F5F5F7] py-0.5 group"
                 >
-                  Terms of Service
+                  <span className="absolute left-0 opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex items-center shrink-0">
+                    <ArrowRight className="h-2.5 w-2.5 text-[#A78BFA]" />
+                  </span>
+                  <span className="relative transition-transform duration-300 group-hover:translate-x-3.5 py-0.5">
+                    Terms of Service
+                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#A78BFA] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  </span>
                 </Link>
               </div>
             </div>

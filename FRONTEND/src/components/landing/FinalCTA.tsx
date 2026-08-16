@@ -1,12 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { Shield, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function FinalCTA() {
+  const router = useRouter();
   return (
-    <section className="relative bg-[#050507] py-28 md:py-36 px-6 overflow-hidden border-t border-white/5">
+    <section id="final-cta" className="relative bg-[#050507] py-28 md:py-36 px-6 overflow-hidden border-t border-white/5">
       {/* Centered Glowing Accent Background */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full bg-[#8B5CF6]/5 blur-[120px] pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] rounded-full bg-[#A78BFA]/5 blur-[80px] pointer-events-none" />
@@ -57,13 +58,20 @@ export default function FinalCTA() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <Link
-            href="/dashboard"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#8B5CF6] hover:bg-[#7c4dff] text-white font-sans text-sm font-semibold shadow-[0_0_20px_rgba(139,92,246,0.25)] hover:shadow-[0_0_30px_rgba(139,92,246,0.45)] transition-all duration-300 group"
+          <button
+            onClick={() => {
+              const isAuthenticated = typeof window !== "undefined" && localStorage.getItem("aegis_auth") === "true";
+              if (isAuthenticated) {
+                router.push("/dashboard");
+              } else {
+                router.push("/login");
+              }
+            }}
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#8B5CF6] hover:bg-[#7c4dff] text-white font-sans text-sm font-semibold shadow-[0_0_20px_rgba(139,92,246,0.25)] hover:shadow-[0_0_30px_rgba(139,92,246,0.45)] transition-all duration-300 group cursor-pointer"
           >
             Open AegisSOC AI
             <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-          </Link>
+          </button>
         </motion.div>
       </div>
     </section>

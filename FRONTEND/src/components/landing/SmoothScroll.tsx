@@ -77,9 +77,32 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       });
     });
 
+    // 3. Global smooth scroll interceptor for hash links
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest("a");
+      if (anchor) {
+        const href = anchor.getAttribute("href");
+        if (href && href.startsWith("#") && href !== "#") {
+          const targetEl = document.querySelector(href) as HTMLElement;
+          if (targetEl) {
+            e.preventDefault();
+            lenis.scrollTo(targetEl, {
+              offset: -80, // Offset to account for sticky navbar
+              duration: 1.5,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easeOutExpo
+            });
+          }
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+
     // Clean up on unmount
     return () => {
       cancelAnimationFrame(animationFrameId);
+      document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
       ctx.revert();
     };

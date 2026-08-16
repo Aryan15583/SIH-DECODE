@@ -72,7 +72,7 @@ export default function DashboardShowcase() {
               <div className="flex items-center gap-1.5">
                 <Shield className="h-3 w-3 text-[#A78BFA] opacity-80" />
                 <span className="text-white/40">https://</span>
-                <span className="text-[#F5F5F7]">aegissoc.ai/dashboard</span>
+                <span className="text-[#F5F5F7]">aegissocai.vercel.app/</span>
               </div>
               <RefreshCw className="h-2.5 w-2.5 opacity-40 hover:opacity-100 transition-opacity cursor-pointer" />
             </div>

@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Shield, ArrowRight, Play } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Hero() {
+  const router = useRouter();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -95,13 +97,20 @@ export default function Hero() {
           variants={itemVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-5"
         >
-          <Link
-            href="/dashboard"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#8B5CF6] hover:bg-[#7c4dff] text-white font-sans text-sm font-medium shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-all duration-300 group"
+          <button
+            onClick={() => {
+              const isAuthenticated = typeof window !== "undefined" && localStorage.getItem("aegis_auth") === "true";
+              if (isAuthenticated) {
+                router.push("/dashboard");
+              } else {
+                router.push("/login");
+              }
+            }}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#8B5CF6] hover:bg-[#7c4dff] text-white font-sans text-sm font-medium shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-all duration-300 group cursor-pointer"
           >
             Explore AegisSOC AI
             <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-          </Link>
+          </button>
 
           <Link
             href="#platform"

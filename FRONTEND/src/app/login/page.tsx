@@ -68,6 +68,8 @@ export default function LoginPage() {
           className="flex flex-col gap-4"
           onSubmit={(e) => {
             e.preventDefault();
+            localStorage.setItem("aegis_auth", "true");
+            window.dispatchEvent(new Event("aegis_auth_change"));
             router.push("/dashboard");
           }}
         >
