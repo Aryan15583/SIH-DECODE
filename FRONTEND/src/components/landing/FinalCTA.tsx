@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function FinalCTA() {
   const router = useRouter();
   return (
-    <section id="final-cta" className="relative bg-[#050507] py-28 md:py-36 px-6 overflow-hidden border-t border-white/5">
+    <section id="final-cta" className="relative bg-[#050507] py-28 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-white/5">
       {/* Centered Glowing Accent Background */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full bg-[#8B5CF6]/5 blur-[120px] pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] rounded-full bg-[#A78BFA]/5 blur-[80px] pointer-events-none" />

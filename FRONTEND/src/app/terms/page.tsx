@@ -22,7 +22,7 @@ export default function TermsPage() {
         <Navbar />
 
         {/* Top spacing to offset sticky header */}
-        <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto relative z-10">
+        <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto relative z-10">
           {/* Subtle Glow Accent */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full bg-[#8B5CF6]/5 blur-[120px] pointer-events-none" />
 

@@ -45,30 +45,30 @@ export function ReportsPageClient() {
               </Button>
             }
           />
-          <div className="overflow-x-auto p-5 pt-3">
-            <table className="w-full min-w-[600px] text-left text-sm">
+          <div className="overflow-x-auto p-5 pt-3 scrollbar-thin">
+            <table className="w-full min-w-[640px] text-left text-sm">
               <thead>
                 <tr className="border-b border-border-1 text-xs text-text-2">
-                  <th className="py-2.5 font-medium">Name</th>
-                  <th className="py-2.5 font-medium">Type</th>
-                  <th className="py-2.5 font-medium">Timestamp</th>
-                  <th className="py-2.5 font-medium">Status</th>
-                  <th className="py-2.5 font-medium text-right">Actions</th>
+                  <th className="py-2.5 font-medium whitespace-nowrap">Name</th>
+                  <th className="py-2.5 font-medium whitespace-nowrap">Type</th>
+                  <th className="py-2.5 font-medium whitespace-nowrap">Timestamp</th>
+                  <th className="py-2.5 font-medium whitespace-nowrap">Status</th>
+                  <th className="py-2.5 font-medium text-right whitespace-nowrap">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {reports.map((r) => (
                   <tr key={r.id} className="border-b border-border-1 last:border-0 hover:bg-white/[0.03]">
-                    <td className="py-3">
+                    <td className="py-3 whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         <FileText className="h-4 w-4 text-text-2" />
                         <span className="text-text-1">{r.name}</span>
                       </div>
                     </td>
-                    <td className="py-3 text-text-2">{r.type}</td>
-                    <td className="py-3 text-text-2 tabular-nums">{r.timestamp}</td>
-                    <td className="py-3"><StatusBadge status={r.status} /></td>
-                    <td className="py-3">
+                    <td className="py-3 text-text-2 whitespace-nowrap">{r.type}</td>
+                    <td className="py-3 text-text-2 tabular-nums whitespace-nowrap">{r.timestamp}</td>
+                    <td className="py-3 whitespace-nowrap"><StatusBadge status={r.status} /></td>
+                    <td className="py-3 whitespace-nowrap">
                       <div className="flex justify-end gap-1.5">
                         <button
                           onClick={() => push("Download started", `${r.name}.pdf`, "success")}

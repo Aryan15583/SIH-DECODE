@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import type { GraphNode, GraphEdge, Severity } from "@/types";
 import {
@@ -44,14 +44,16 @@ const EDGE_COLOR: Record<Severity, string> = {
   Info: "#22b8f0",
 };
 
-function normalize(nodes: GraphNode[]) {
+function normalize(nodes: GraphNode[], isMobile: boolean) {
   const xs = nodes.map((n) => n.x);
   const ys = nodes.map((n) => n.y);
   const minX = Math.min(...xs), maxX = Math.max(...xs);
   const minY = Math.min(...ys), maxY = Math.max(...ys);
   const spanX = maxX - minX || 1;
   const spanY = maxY - minY || 1;
-  const pad = 12;
+  
+  // Mobile needs a wider padding buffer to keep nodes away from edges
+  const pad = isMobile ? 18 : 12;
   const map = new Map<string, { xPct: number; yPct: number }>();
   nodes.forEach((n) => {
     const xPct = pad + ((n.x - minX) / spanX) * (100 - pad * 2);
@@ -76,7 +78,22 @@ export function AttackGraphCanvas({
   selectedId?: string | null;
   className?: string;
 }) {
-  const positions = useMemo(() => normalize(nodes), [nodes]);
+  const [width, setWidth] = useState(1024);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    const handleResize = () => setWidth(window.innerWidth);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const isMobile = mounted && width < 640;
+  const positions = useMemo(() => normalize(nodes, isMobile), [nodes, isMobile]);
   const [hovered, setHovered] = useState<string | null>(null);
   const byId = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
 
@@ -112,6 +129,7 @@ export function AttackGraphCanvas({
 
       {nodes.map((n) => {
         const pos = positions.get(n.id)!;
+        if (!pos) return null;
         const Icon = ICONS[n.type];
         const isSelected = selectedId === n.id;
         return (
@@ -121,19 +139,19 @@ export function AttackGraphCanvas({
             onMouseEnter={() => setHovered(n.id)}
             onMouseLeave={() => setHovered(null)}
             style={{ left: `${pos.xPct}%`, top: `${pos.yPct}%` }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 cursor-pointer group"
+            className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1 sm:gap-1.5 cursor-pointer group"
           >
             <span
               className={cn(
-                "flex h-9 w-9 items-center justify-center rounded-full border-2 transition-transform group-hover:scale-110",
+                "flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full border-2 transition-transform group-hover:scale-110",
                 NODE_COLOR[n.type],
                 (n.critical || isSelected) && "ring-2 ring-offset-2 ring-offset-bg-1",
                 n.critical ? "ring-danger/50" : isSelected ? "ring-primary/60" : ""
               )}
             >
-              <Icon className="h-4 w-4" strokeWidth={2} />
+              <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={2} />
             </span>
-            <span className="whitespace-nowrap rounded-md bg-bg-1/90 px-1.5 py-0.5 text-[10px] font-medium text-text-2 border border-border-1 group-hover:text-text-1">
+            <span className="max-w-[70px] sm:max-w-none truncate sm:whitespace-nowrap rounded-md bg-bg-1/90 px-1 sm:px-1.5 py-0.5 text-[8px] sm:text-[10px] font-medium text-text-2 border border-border-1 group-hover:text-text-1">
               {n.label}
             </span>
           </button>

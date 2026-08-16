@@ -13,7 +13,7 @@ export default function DashboardShowcase() {
   const selectedKpis = kpis.slice(0, 3);
 
   return (
-    <section className="relative bg-[#08080D] py-24 md:py-36 px-6 overflow-hidden border-t border-white/5">
+    <section className="relative bg-[#08080D] py-24 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-white/5">
       {/* Accent Radial Light */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4/5 h-[300px] bg-gradient-to-b from-[#A78BFA]/5 to-transparent blur-3xl pointer-events-none" />
 

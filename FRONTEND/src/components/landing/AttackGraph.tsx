@@ -16,7 +16,7 @@ export default function AttackGraph() {
   ];
 
   return (
-    <section className="relative bg-[#050507] py-24 md:py-36 px-6 overflow-hidden border-t border-white/5">
+    <section className="relative bg-[#050507] py-24 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-white/5">
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[350px] h-[350px] bg-[#A78BFA]/2 blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
@@ -48,7 +48,7 @@ export default function AttackGraph() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="font-sans text-sm md:text-base font-light text-[#92929F] leading-relaxed mb-6"
+              className="font-sans text-sm md:text-base font-light text-[#92929F] max-w-xl leading-relaxed mb-6"
             >
               Reconstruct complex multi-stage attacks across your perimeter, active directories, databases, and cloud egress vectors. View chronological flow connections to trace the root cause instantly.
             </motion.p>
@@ -56,7 +56,7 @@ export default function AttackGraph() {
 
           {/* Right Area (Spans 7 cols): Technical Attack Path SVG Visualization */}
           <div className="lg:col-span-7 p-6 md:p-8 rounded-2xl border border-white/5 bg-[#0D0D14]/40 relative min-h-[340px] flex items-center justify-center overflow-hidden">
-            <div className="relative w-full h-[260px]">
+            <div className="relative w-full h-[260px] origin-center max-sm:scale-[0.85] max-[380px]:scale-[0.72]">
               
               {/* SVG connection lines with flowing pulses */}
               <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">

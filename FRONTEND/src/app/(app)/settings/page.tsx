@@ -60,13 +60,13 @@ export default function SettingsPage() {
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-[220px_1fr]">
       <Card className="h-fit p-2">
-        <nav className="flex flex-col gap-0.5 lg:flex-col">
+        <nav className="flex flex-row overflow-x-auto lg:flex-col gap-1 pb-1.5 lg:pb-0 scrollbar-thin select-none">
           {TABS.map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
               className={cn(
-                "rounded-lg px-3 py-2.5 text-left text-sm transition-colors cursor-pointer",
+                "rounded-lg px-3 py-2 text-left text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap shrink-0",
                 tab === t ? "bg-primary/15 text-text-1 border border-primary/30" : "text-text-2 hover:bg-white/5 hover:text-text-1 border border-transparent"
               )}
             >
