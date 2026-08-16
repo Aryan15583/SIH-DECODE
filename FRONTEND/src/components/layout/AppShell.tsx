@@ -29,7 +29,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen bg-bg-0">
       <Sidebar mobileOpen={mobileOpen} onCloseMobile={() => setMobileOpen(false)} />
       <div className="flex min-w-0 flex-1 flex-col">
-        <TopNavbar title={meta?.title} subtitle={meta?.subtitle} onOpenMobile={() => setMobileOpen(true)} />
+        <TopNavbar title={meta?.title} onOpenMobile={() => setMobileOpen(true)} />
         <main className="mx-auto w-full max-w-[1600px] flex-1 px-4 py-5 lg:px-6 lg:py-6">{children}</main>
       </div>
     </div>

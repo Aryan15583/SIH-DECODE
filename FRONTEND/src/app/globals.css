@@ -1,21 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --bg-0: #060d16;
-  --bg-1: #08111c;
-  --bg-2: #0b1420;
-  --surface-1: #101c29;
-  --surface-2: #132231;
-  --border-1: #243548;
-  --border-2: #2c4054;
-  --primary: #5865f2;
-  --secondary: #7c5cff;
-  --cyber-blue: #22b8f0;
-  --success: #39d98a;
-  --warning: #f5b942;
-  --danger: #ff4d5a;
-  --text-1: #f5f7fa;
-  --text-2: #8d9aaa;
+  --bg-0: #050507;
+  --bg-1: #0D0D14;
+  --bg-2: #08080D;
+  --surface-1: #0D0D14;
+  --surface-2: #11111A;
+  --border-1: rgba(255, 255, 255, 0.07);
+  --border-2: rgba(255, 255, 255, 0.12);
+  --primary: #A78BFA;
+  --secondary: #8B6FE8;
+  --cyber-blue: #C4B5FD;
+  --success: #789B84;
+  --warning: #D88A5B;
+  --danger: #E06C75;
+  --text-1: #F4F2F8;
+  --text-2: #A7A3AE;
+
+  /* Chart Variable tokens */
+  --chart-grid: rgba(255, 255, 255, 0.05);
+  --chart-tick: #6F6B76;
+  --chart-axis: rgba(255, 255, 255, 0.07);
+  --chart-tooltip-bg: #0D0D14;
+  --chart-tooltip-border: rgba(255, 255, 255, 0.12);
+  --chart-primary: #A78BFA;
+  --chart-secondary: #8B6FE8;
+
+  /* Graph Variable tokens */
+  --graph-medium: #A78BFA;
+  --graph-info: #C4B5FD;
+  --graph-low: #7FA889;
+  --graph-default: rgba(255, 255, 255, 0.15);
 }
 
 @theme inline {
@@ -50,8 +65,8 @@ body {
   color: var(--text-1);
   font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   background-image:
-    radial-gradient(1200px 600px at 15% -10%, rgba(88, 101, 242, 0.10), transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, rgba(124, 92, 255, 0.08), transparent 55%);
+    radial-gradient(1200px 600px at 15% -10%, rgba(167, 139, 250, 0.08), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(139, 111, 232, 0.06), transparent 55%);
 }
 
 ::-webkit-scrollbar {
@@ -70,7 +85,7 @@ body {
 }
 
 .glow-primary {
-  box-shadow: 0 0 0 1px rgba(88, 101, 242, 0.35), 0 0 24px rgba(88, 101, 242, 0.18);
+  box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.25), 0 0 24px rgba(167, 139, 250, 0.12);
 }
 
 .card-surface {
@@ -112,6 +127,12 @@ body {
   --border-2: rgba(24, 22, 28, 0.16);
   --text-1: #18161C;
   --text-2: #706B74;
+  --primary: #7657C8;
+  --secondary: #6044A8;
+  --cyber-blue: #9B83D8;
+  --success: #7657C8;
+  --warning: #b88d22;
+  --danger: #d63e4b;
 }
 
 html.light {
@@ -368,24 +389,76 @@ body,
 section, 
 header, 
 footer, 
-div, 
-span, 
-p, 
-h1, 
-h2, 
-h3, 
-h4, 
-a, 
-button, 
-svg,
-line,
-path,
-stop {
-  transition: background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-              color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-              fill 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-              stroke 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-              stop-color 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important;
+aside,
+main,
+.card-surface {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              background-image 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Recharts Area Chart Theme Overrides */
+.recharts-cartesian-grid line {
+  stroke: var(--chart-grid) !important;
+}
+.recharts-cartesian-axis-tick text {
+  fill: var(--chart-tick) !important;
+}
+.recharts-cartesian-axis-line {
+  stroke: var(--chart-axis) !important;
+}
+#threatFill stop {
+  stop-color: var(--chart-primary) !important;
+}
+.recharts-area-path {
+  stroke: var(--chart-primary) !important;
+}
+.recharts-default-tooltip {
+  background-color: var(--chart-tooltip-bg) !important;
+  border-color: var(--chart-tooltip-border) !important;
+}
+.recharts-default-tooltip .recharts-tooltip-label {
+  color: var(--text-2) !important;
+}
+.recharts-default-tooltip .recharts-tooltip-item {
+  color: var(--text-1) !important;
+}
+
+/* Dashboard Sidebar & Dropdown Hovers and Glow Overrides */
+.glow-primary {
+  box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.25), 0 0 24px rgba(167, 139, 250, 0.12) !important;
+}
+.light .glow-primary {
+  box-shadow: 0 0 0 1px rgba(118, 87, 200, 0.20), 0 4px 16px rgba(118, 87, 200, 0.08) !important;
+}
+.hover\:bg-white\/5:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+.light .hover\:bg-white\/5:hover {
+  background-color: rgba(24, 22, 28, 0.04) !important;
+}
+
+/* Attack Graph Canvas Overrides in Dashboard */
+svg line[stroke="#5865f2"] {
+  stroke: var(--graph-medium) !important;
+}
+svg line[stroke="#22b8f0"] {
+  stroke: var(--graph-info) !important;
+}
+svg line[stroke="#39d98a"] {
+  stroke: var(--graph-low) !important;
+}
+svg line[stroke="#3a5170"] {
+  stroke: var(--graph-default) !important;
+}
+svg marker path {
+  fill: var(--text-2) !important;
+  opacity: 0.35 !important;
+}
+
+/* Sidebar Width Smooth Transition Override */
+aside.hidden.lg\:flex {
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }

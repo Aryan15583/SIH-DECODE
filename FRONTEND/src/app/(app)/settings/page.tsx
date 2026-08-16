@@ -14,11 +14,16 @@ function Toggle({ defaultChecked = false }: { defaultChecked?: boolean }) {
     <button
       onClick={() => setOn((v) => !v)}
       className={cn(
-        "relative h-5.5 w-10 shrink-0 rounded-full border transition-colors cursor-pointer",
-        on ? "border-primary/50 bg-primary" : "border-border-2 bg-surface-2"
+        "relative h-6 w-11 shrink-0 rounded-full border-2 transition-colors cursor-pointer",
+        on ? "border-primary bg-primary" : "border-border-2 bg-border-2"
       )}
     >
-      <span className={cn("absolute top-0.5 h-4 w-4 rounded-full bg-white transition-transform", on ? "translate-x-[22px]" : "translate-x-0.5")} />
+      <span
+        className={cn(
+          "absolute top-0 left-0 h-5 w-5 rounded-full bg-white transition-transform duration-200",
+          on ? "translate-x-5" : "translate-x-0"
+        )}
+      />
     </button>
   );
 }
