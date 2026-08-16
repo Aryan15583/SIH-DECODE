@@ -14,7 +14,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-[#050507] pt-20 pb-12 px-6 border-t border-white/5 z-10">
+    <footer className="relative bg-[#050507] pt-20 pb-12 px-4 sm:px-6 lg:px-8 border-t border-white/5 z-10">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 mb-16">
           

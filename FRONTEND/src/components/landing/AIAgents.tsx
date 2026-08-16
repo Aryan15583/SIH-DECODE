@@ -38,7 +38,7 @@ export default function AIAgents() {
   ];
 
   return (
-    <section id="ai-agents" className="relative bg-[#050507] py-24 md:py-36 px-6 overflow-hidden border-t border-white/5">
+    <section id="ai-agents" className="relative bg-[#050507] py-24 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-white/5">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#8B5CF6]/2 blur-[140px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto">
@@ -66,9 +66,9 @@ export default function AIAgents() {
         </div>
 
         {/* Vertical Flow System */}
-        <div className="relative pl-8 md:pl-24">
+        <div className="relative pl-6 sm:pl-8 md:pl-24">
           {/* Vertical Connecting Line */}
-          <div className="absolute left-[39px] md:left-[95px] top-4 bottom-4 w-px bg-gradient-to-b from-[#A78BFA]/40 via-white/10 to-[#8B5CF6]/40">
+          <div className="absolute left-[31px] sm:left-[39px] md:left-[95px] top-4 bottom-4 w-px bg-gradient-to-b from-[#A78BFA]/40 via-white/10 to-[#8B5CF6]/40">
             {/* Animated Pulse along the line */}
             <motion.div
               animate={{
@@ -84,7 +84,7 @@ export default function AIAgents() {
           </div>
 
           {/* Agents Node List */}
-          <div className="flex flex-col gap-12 md:gap-16">
+          <div className="flex flex-col gap-10 md:gap-16">
             {agentsList.map((agent, i) => {
               const Icon = agent.icon;
               return (
@@ -94,10 +94,10 @@ export default function AIAgents() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="relative flex items-start gap-4 md:gap-8 group"
+                  className="relative flex items-start gap-3 sm:gap-4 md:gap-8 group"
                 >
                   {/* Glowing Node Point */}
-                  <div className="absolute left-[-23px] md:left-[-79px] top-1 flex items-center justify-center">
+                  <div className="absolute left-[-5px] md:left-[-13px] top-1.5 flex items-center justify-center">
                     <div className="relative">
                       <div className="absolute inset-0 bg-[#A78BFA]/30 rounded-full blur-[6px] scale-125 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <div className="w-6 h-6 rounded-full border border-white/10 bg-[#0D0D14] flex items-center justify-center z-10 relative">
@@ -107,11 +107,11 @@ export default function AIAgents() {
                   </div>
 
                   {/* Agent Card */}
-                  <div className="flex-1 flex items-center justify-between gap-6 p-5 rounded-2xl border border-white/5 bg-[#0D0D14]/30 hover:bg-[#0D0D14]/70 hover:border-white/10 transition-all duration-300">
-                    <div className="flex items-center gap-4 min-w-0">
+                  <div className="flex-1 flex items-center justify-between gap-3 sm:gap-6 p-4 sm:p-5 rounded-2xl border border-white/5 bg-[#0D0D14]/30 hover:bg-[#0D0D14]/70 hover:border-white/10 transition-all duration-300">
+                    <div className="flex items-center gap-3 sm:gap-4 min-w-0">
                       {/* Icon container */}
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/8 bg-[#050507] text-[#92929F] group-hover:text-[#A78BFA] group-hover:border-[#A78BFA]/20 transition-all duration-300">
-                        <Icon className="h-4.5 w-4.5" />
+                      <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl border border-white/8 bg-[#050507] text-[#92929F] group-hover:text-[#A78BFA] group-hover:border-[#A78BFA]/20 transition-all duration-300">
+                        <Icon className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
                       </span>
                       
                       {/* Agent Info */}
@@ -119,14 +119,14 @@ export default function AIAgents() {
                         <h4 className="font-sans text-xs md:text-sm font-semibold tracking-wider text-[#F5F5F7]">
                           {agent.name}
                         </h4>
-                        <p className="font-sans text-xs font-light text-[#92929F] mt-1 truncate max-w-[200px] sm:max-w-[320px] md:max-w-md">
+                        <p className="font-sans text-[11px] sm:text-xs font-light text-[#92929F] mt-1 truncate max-w-[130px] sm:max-w-[220px] md:max-w-md">
                           {agent.task}
                         </p>
                       </div>
                     </div>
 
                     {/* Status Badge */}
-                    <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-[#39d98a]/20 bg-[#39d98a]/5 text-[#39d98a] select-none shrink-0 font-sans text-[10px] font-semibold tracking-wide">
+                    <div className="flex items-center gap-1.5 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full border border-[#39d98a]/20 bg-[#39d98a]/5 text-[#39d98a] select-none shrink-0 font-sans text-[9px] sm:text-[10px] font-semibold tracking-wide">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#39d98a] animate-pulse" />
                       {agent.status}
                     </div>

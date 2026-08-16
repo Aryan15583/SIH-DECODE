@@ -44,7 +44,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center bg-[#050507] overflow-hidden pt-20 pb-20 md:pb-28 px-6">
+    <section className="relative min-h-screen flex flex-col items-center justify-center bg-[#050507] overflow-hidden pt-20 pb-20 md:pb-28 px-4 sm:px-6 lg:px-8">
       {/* Subtle Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
@@ -124,7 +124,7 @@ export default function Hero() {
 
       {/* Futuristic Security Perimeter Horizon/Arc */}
       <motion.div
-        className="absolute bottom-0 w-full max-w-7xl mx-auto z-10 pointer-events-none flex justify-center px-6"
+        className="absolute bottom-0 w-full max-w-7xl mx-auto z-10 pointer-events-none flex justify-center px-4 sm:px-6 lg:px-8"
         variants={horizonVariants}
         initial="hidden"
         animate="visible"

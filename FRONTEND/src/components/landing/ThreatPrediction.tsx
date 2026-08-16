@@ -12,7 +12,7 @@ export default function ThreatPrediction() {
   ];
 
   return (
-    <section id="features" className="relative bg-[#08080D] py-24 md:py-36 px-6 overflow-hidden border-t border-white/5">
+    <section id="features" className="relative bg-[#08080D] py-24 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-white/5">
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[#8B5CF6]/2 blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">

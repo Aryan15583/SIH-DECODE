@@ -23,7 +23,7 @@ export default function ProductIntro() {
   ];
 
   return (
-    <section id="platform" className="relative bg-[#050507] py-24 md:py-36 px-6 overflow-hidden">
+    <section id="platform" className="relative bg-[#050507] py-24 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background Accent Glow */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[#8B5CF6]/3 blur-[120px] pointer-events-none" />
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[#A78BFA]/2 blur-[120px] pointer-events-none" />
