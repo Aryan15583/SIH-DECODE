@@ -4,6 +4,16 @@ import Footer from "@/components/landing/Footer";
 import SmoothScroll from "@/components/landing/SmoothScroll";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description:
+    "Read the Terms of Service governing use of the AegisSOC AI platform.",
+  alternates: {
+    canonical: "/terms",
+  },
+};
 
 export default function TermsPage() {
   return (

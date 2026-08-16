@@ -4,6 +4,16 @@ import Footer from "@/components/landing/Footer";
 import SmoothScroll from "@/components/landing/SmoothScroll";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "Read the Privacy Policy for AegisSOC AI and learn how information is handled when using the platform.",
+  alternates: {
+    canonical: "/privacy",
+  },
+};
 
 export default function PrivacyPage() {
   return (

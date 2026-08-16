@@ -3,7 +3,11 @@ import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
 
 export const metadata: Metadata = {
-  title: "AegisSOC AI — Autonomous Security Operations Platform",
+  metadataBase: new URL("https://aegissocai.vercel.app"),
+  title: {
+    default: "AegisSOC AI — Autonomous Cybersecurity Platform",
+    template: "%s | AegisSOC AI",
+  },
   description:
     "AegisSOC AI is an autonomous, multi-agent Security Operations Center platform for real-time threat detection, investigation and response.",
   icons: {
