@@ -3,9 +3,12 @@ import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
 
 export const metadata: Metadata = {
-  title: "AegisSOC AI — Autonomous Security Operations",
+  title: "AegisSOC AI — Autonomous Security Operations Platform",
   description:
     "AegisSOC AI is an autonomous, multi-agent Security Operations Center platform for real-time threat detection, investigation and response.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

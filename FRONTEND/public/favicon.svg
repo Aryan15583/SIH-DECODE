@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Shield Background -->
+  <path d="M16 2L3 7v9c0 7.5 5.5 13 13 14 7.5-1 13-6.5 13-14V7L16 2z" fill="#050507" stroke="#A78BFA" stroke-width="2" />
+  <!-- Violet Core Glow -->
+  <path d="M16 5.5L6.5 9v6.5c0 5.5 4 9.5 9.5 10.5 5.5-1 9.5-5 9.5-10.5V9L16 5.5z" fill="url(#violet-gradient)" opacity="0.85" />
+  <!-- Center Star/Spark -->
+  <path d="M16 10l1.2 2.8 2.8 1.2-2.8 1.2-1.2 2.8-1.2-2.8-2.8-1.2 2.8-1.2L16 10z" fill="#FFFFFF" />
+  
+  <defs>
+    <linearGradient id="violet-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A78BFA" />
+      <stop offset="100%" stop-color="#8B6FE8" />
+    </linearGradient>
+  </defs>
+</svg>
