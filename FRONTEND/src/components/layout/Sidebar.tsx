@@ -193,8 +193,8 @@ export function Sidebar({
             >
               {/* Header info */}
               <div className="px-3 py-2 min-w-0">
-                <p className="truncate text-sm font-bold text-text-1">John Doe</p>
-                <p className="truncate text-xs text-text-2 mt-0.5">john.doe@aegissoc.ai</p>
+                <p className="truncate text-sm font-bold text-text-1">User</p>
+                <p className="truncate text-xs text-text-2 mt-0.5">—</p>
               </div>
               
               <div className="my-1.5 h-px bg-border-2" />
@@ -268,7 +268,7 @@ export function Sidebar({
         >
           <div className="flex items-center min-w-0">
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-xs font-semibold text-white border border-primary/30 shadow-md">
-              JD
+              U
             </div>
             <div
               className={cn(
@@ -276,8 +276,8 @@ export function Sidebar({
                 collapsed ? "max-w-0 opacity-0 ml-0 pointer-events-none" : "max-w-[140px] opacity-100 ml-2.5"
               )}
             >
-              <p className="truncate text-xs font-bold leading-tight text-text-1">John Doe</p>
-              <p className="truncate text-[10px] leading-tight text-text-2">john.doe@aegissoc.ai</p>
+              <p className="truncate text-xs font-bold leading-tight text-text-1">User</p>
+              <p className="truncate text-[10px] leading-tight text-text-2">—</p>
             </div>
           </div>
           <ChevronsUpDown

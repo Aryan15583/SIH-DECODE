@@ -5,17 +5,23 @@ import { ZoomIn, ZoomOut, RotateCcw, Filter, Box, Map } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { AttackGraphCanvas } from "@/components/graph/AttackGraphCanvas";
-import { fullAttackGraph } from "@/lib/mock-data";
 import type { GraphNode } from "@/types";
+import { useApi } from "@/hooks/useApi";
+import { getAttackGraph } from "@/lib/api/attack-graph";
 
 export function AttackGraphPageClient() {
   const [zoom, setZoom] = useState(1);
   const [selected, setSelected] = useState<GraphNode | null>(null);
   const [showCriticalOnly, setShowCriticalOnly] = useState(false);
 
-  const nodes = showCriticalOnly ? fullAttackGraph.nodes.filter((n) => n.critical) : fullAttackGraph.nodes;
+  const { data: attackGraph, loading, error } = useApi(getAttackGraph);
+
+  const graphNodes = attackGraph?.nodes || [];
+  const graphEdges = attackGraph?.edges || [];
+
+  const nodes = showCriticalOnly ? graphNodes.filter((n) => n.critical) : graphNodes;
   const nodeIds = new Set(nodes.map((n) => n.id));
-  const edges = fullAttackGraph.edges.filter((e) => nodeIds.has(e.from) && nodeIds.has(e.to));
+  const edges = graphEdges.filter((e) => nodeIds.has(e.from) && nodeIds.has(e.to));
 
   return (
     <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1fr_300px]">
@@ -45,6 +51,8 @@ export function AttackGraphPageClient() {
             height={520}
             onNodeClick={setSelected}
             selectedId={selected?.id}
+            loading={loading}
+            error={!!error}
           />
         </div>
       </Card>

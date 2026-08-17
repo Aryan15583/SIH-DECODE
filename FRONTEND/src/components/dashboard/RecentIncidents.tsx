@@ -1,12 +1,32 @@
 import Link from "next/link";
 import { AlertTriangle, ChevronRight } from "lucide-react";
 import { SeverityBadge } from "@/components/ui/Badge";
-import { incidents } from "@/lib/mock-data";
+import type { Incident } from "@/types";
 
-export function RecentIncidents() {
+export function RecentIncidents({
+  incidents = [],
+  loading = false,
+  error = false,
+}: {
+  incidents?: Incident[];
+  loading?: boolean;
+  error?: boolean;
+}) {
+  if (error) {
+    return <p className="text-center text-xs text-text-2 py-4">Unable to load incidents</p>;
+  }
+
+  if (loading) {
+    return <p className="text-center text-xs text-text-2 py-4 animate-pulse">Loading incidents...</p>;
+  }
+
+  if (incidents.length === 0) {
+    return <p className="text-center text-xs text-text-2 py-4">No incidents detected</p>;
+  }
+
   return (
     <div className="flex flex-col divide-y divide-border-1">
-      {incidents.map((inc) => (
+      {incidents.slice(0, 5).map((inc) => (
         <Link
           key={inc.id}
           href={`/incidents/${inc.id}`}

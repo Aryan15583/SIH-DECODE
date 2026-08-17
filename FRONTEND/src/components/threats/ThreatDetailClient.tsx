@@ -1,36 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import { ChevronLeft, Lock, UserX, Ban, FilePlus2, Zap } from "lucide-react";
 import { Card, CardHeader } from "@/components/ui/Card";
 import { SeverityBadge, StatusBadge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
-import type { Threat } from "@/types";
+
+import { useApi } from "@/hooks/useApi";
+import { getThreat } from "@/lib/api/threats";
 
 const TABS = ["Overview", "Timeline", "Entities", "Evidence", "Response"] as const;
 
-const timeline = (t: Threat) => [
-  { time: t.firstSeen, event: `${t.name} pattern first observed on ${t.asset}` },
-  { time: "+2m", event: "AI Detection Agent raised confidence to " + Math.max(t.aiConfidence - 6, 40) + "%" },
-  { time: "+5m", event: "Correlation Agent linked related telemetry from " + t.source },
-  { time: t.lastActivity, event: `Confidence stabilized at ${t.aiConfidence}%, status set to ${t.status}` },
-];
-
-const reasons = [
-  "Behavioral pattern deviates from established baseline",
-  "Signature overlaps with known attacker tooling",
-  "Sequence of actions matches MITRE ATT&CK technique library",
-  "Asset risk score elevated due to recent exposure",
-];
-
-export function ThreatDetailClient({ threat }: { threat: Threat }) {
+export function ThreatDetailClient({ threatId }: { threatId: string }) {
+  const { data: threat, loading, error } = useApi(
+    useCallback(() => getThreat(threatId), [threatId])
+  );
   const [tab, setTab] = useState<(typeof TABS)[number]>("Overview");
   const { push } = useToast();
 
   function act(label: string) {
-    push(`${label} action queued`, `Response Agent will execute on ${threat.asset} pending approval.`, "success");
+    if (threat) {
+      push(`${label} action queued`, `Response Agent will execute on ${threat.asset} pending approval.`, "success");
+    }
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Link href="/threats" className="flex w-fit items-center gap-1 text-xs text-text-2 hover:text-text-1">
+          <ChevronLeft className="h-3.5 w-3.5" /> Back to Threats
+        </Link>
+        <Card className="p-8 text-center text-sm text-text-2">
+          Unable to load threat details
+        </Card>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Link href="/threats" className="flex w-fit items-center gap-1 text-xs text-text-2 hover:text-text-1">
+          <ChevronLeft className="h-3.5 w-3.5" /> Back to Threats
+        </Link>
+        <Card className="p-8 text-center text-sm text-text-2 animate-pulse">
+          Loading threat details...
+        </Card>
+      </div>
+    );
+  }
+
+  if (!threat) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Link href="/threats" className="flex w-fit items-center gap-1 text-xs text-text-2 hover:text-text-1">
+          <ChevronLeft className="h-3.5 w-3.5" /> Back to Threats
+        </Link>
+        <Card className="p-8 text-center text-sm text-text-2">
+          No details available for this threat
+        </Card>
+      </div>
+    );
   }
 
   return (
@@ -96,14 +128,20 @@ export function ThreatDetailClient({ threat }: { threat: Threat }) {
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
           <Card className="lg:col-span-2">
             <CardHeader title="Why AI Detected It" />
-            <ul className="flex flex-col gap-3 p-5 pt-4">
-              {reasons.map((r) => (
-                <li key={r} className="flex items-start gap-2.5 text-sm text-text-2">
-                  <Zap className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-                  {r}
-                </li>
-              ))}
-            </ul>
+            {threat.reasons && threat.reasons.length > 0 ? (
+              <ul className="flex flex-col gap-3 p-5 pt-4">
+                {threat.reasons.map((r) => (
+                  <li key={r} className="flex items-start gap-2.5 text-sm text-text-2">
+                    <Zap className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+                    {r}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="p-5 pt-4 text-sm text-text-2">
+                No AI detection reasons available
+              </div>
+            )}
           </Card>
           <Card>
             <CardHeader title="Recommended Response" />
@@ -129,15 +167,19 @@ export function ThreatDetailClient({ threat }: { threat: Threat }) {
         <Card>
           <CardHeader title="Attack Timeline" />
           <div className="p-5 pt-4">
-            <ol className="relative flex flex-col gap-6 border-l border-border-2 pl-5">
-              {timeline(threat).map((e, i) => (
-                <li key={i} className="relative">
-                  <span className="absolute -left-[26px] top-1 h-2.5 w-2.5 rounded-full bg-primary ring-4 ring-primary/15" />
-                  <p className="text-xs text-text-2">{e.time}</p>
-                  <p className="text-sm text-text-1">{e.event}</p>
-                </li>
-              ))}
-            </ol>
+            {threat.timeline && threat.timeline.length > 0 ? (
+              <ol className="relative flex flex-col gap-6 border-l border-border-2 pl-5">
+                {threat.timeline.map((e, i) => (
+                  <li key={i} className="relative">
+                    <span className="absolute -left-[26px] top-1 h-2.5 w-2.5 rounded-full bg-primary ring-4 ring-primary/15" />
+                    <p className="text-xs text-text-2">{e.time}</p>
+                    <p className="text-sm text-text-1">{e.event}</p>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p className="text-sm text-text-2">No timeline data available</p>
+            )}
           </div>
         </Card>
       )}
@@ -160,8 +202,7 @@ export function ThreatDetailClient({ threat }: { threat: Threat }) {
         <Card>
           <CardHeader title="Evidence" />
           <div className="p-5 pt-4 text-sm text-text-2">
-            Raw telemetry, process trees and packet captures collected by {threat.source} are attached to this
-            threat for offline review by the Investigation Agent.
+            {threat.evidence ?? "No evidence available"}
           </div>
         </Card>
       )}

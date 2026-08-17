@@ -4,9 +4,17 @@ import { useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { NetworkMap } from "@/components/network/NetworkMap";
+import { useApi } from "@/hooks/useApi";
+import { getNetwork } from "@/lib/api/network";
 
 export default function NetworkMapPage() {
   const [view, setView] = useState<"2D" | "3D" | "Map">("2D");
+  const { data, loading, error } = useApi(getNetwork);
+
+  const nodes = data?.nodes || [];
+  const connections = data?.connections ? data.connections.map(c => [c.from, c.to] as [string, string]) : undefined;
+
+  const hasData = nodes.length > 0 && !error && !loading;
 
   return (
     <div className="flex flex-col gap-4">
@@ -16,10 +24,12 @@ export default function NetworkMapPage() {
             {v} View
           </Button>
         ))}
-        <span className="ml-auto text-xs text-text-2">Live infrastructure snapshot · Updated just now</span>
+        <span className="ml-auto text-xs text-text-2">
+          {hasData ? "Live infrastructure snapshot · Updated just now" : "Not available"}
+        </span>
       </Card>
       <Card className="p-4">
-        <NetworkMap />
+        <NetworkMap nodes={nodes} connections={connections} loading={loading} error={!!error} />
       </Card>
     </div>
   );

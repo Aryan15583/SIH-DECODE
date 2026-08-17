@@ -1,13 +1,33 @@
 import { cn } from "@/lib/utils";
 import type { Prediction } from "@/types";
 
-function tone(p: number) {
-  if (p >= 70) return { bar: "bg-danger", text: "text-danger" };
-  if (p >= 45) return { bar: "bg-warning", text: "text-warning" };
-  return { bar: "bg-success", text: "text-success" };
-}
+const tone = (prob: number) => {
+  if (prob >= 75) return { text: "text-danger", bar: "bg-danger" };
+  if (prob >= 50) return { text: "text-warning", bar: "bg-warning" };
+  return { text: "text-success", bar: "bg-success" };
+};
 
-export function PredictionList({ predictions }: { predictions: Prediction[] }) {
+export function PredictionList({
+  predictions,
+  loading = false,
+  error = false,
+}: {
+  predictions: Prediction[];
+  loading?: boolean;
+  error?: boolean;
+}) {
+  if (error) {
+    return <p className="text-center text-xs text-text-2 py-4">Unable to load predictions</p>;
+  }
+
+  if (loading) {
+    return <p className="text-center text-xs text-text-2 py-4 animate-pulse">Loading predictions...</p>;
+  }
+
+  if (predictions.length === 0) {
+    return <p className="text-center text-xs text-text-2 py-4">No predictions available</p>;
+  }
+
   return (
     <div className="flex flex-col gap-4">
       {predictions.map((p) => {

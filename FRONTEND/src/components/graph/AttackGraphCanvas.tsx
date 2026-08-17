@@ -70,6 +70,8 @@ export function AttackGraphCanvas({
   onNodeClick,
   selectedId,
   className,
+  loading = false,
+  error = false,
 }: {
   nodes: GraphNode[];
   edges: GraphEdge[];
@@ -77,6 +79,8 @@ export function AttackGraphCanvas({
   onNodeClick?: (node: GraphNode) => void;
   selectedId?: string | null;
   className?: string;
+  loading?: boolean;
+  error?: boolean;
 }) {
   const [width, setWidth] = useState(1024);
   const [mounted, setMounted] = useState(false);
@@ -96,6 +100,30 @@ export function AttackGraphCanvas({
   const positions = useMemo(() => normalize(nodes, isMobile), [nodes, isMobile]);
   const [hovered, setHovered] = useState<string | null>(null);
   const byId = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
+
+  if (error) {
+    return (
+      <div className={cn("flex items-center justify-center text-sm text-text-2 border border-border-1 bg-bg-1/40 rounded-xl", className)} style={{ height }}>
+        Unable to load attack path data
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className={cn("flex items-center justify-center text-sm text-text-2 border border-border-1 bg-bg-1/40 rounded-xl animate-pulse", className)} style={{ height }}>
+        Loading attack path data...
+      </div>
+    );
+  }
+
+  if (nodes.length === 0) {
+    return (
+      <div className={cn("flex items-center justify-center text-sm text-text-2 border border-border-1 bg-bg-1/40 rounded-xl", className)} style={{ height }}>
+        No attack path data available
+      </div>
+    );
+  }
 
   return (
     <div className={cn("relative w-full select-none", className)} style={{ height }}>

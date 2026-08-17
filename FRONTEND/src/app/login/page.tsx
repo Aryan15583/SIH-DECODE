@@ -91,7 +91,7 @@ export default function LoginPage() {
               type="email"
               placeholder="you@company.com"
               required
-              defaultValue={isLogin ? "john.doe@aegissoc.ai" : ""}
+              defaultValue={""}
               className="w-full rounded-lg border border-white/8 bg-[#050507] px-3.5 py-2.5 text-xs text-[#F5F5F7] placeholder:text-[#92929F]/60 outline-none focus:border-[#A78BFA]/50 transition-colors"
             />
           </div>
@@ -110,7 +110,7 @@ export default function LoginPage() {
                 type={showPw ? "text" : "password"}
                 placeholder="••••••••"
                 required
-                defaultValue={isLogin ? "password123" : ""}
+                defaultValue={""}
                 className="w-full rounded-lg border border-white/8 bg-[#050507] px-3.5 py-2.5 pr-10 text-xs text-[#F5F5F7] placeholder:text-[#92929F]/60 outline-none focus:border-[#A78BFA]/50 transition-colors"
               />
               <button

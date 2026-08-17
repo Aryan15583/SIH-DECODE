@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Building2, Network, Cloud, Server, ChevronLeft, ChevronRight, Camera } from "lucide-react";
-import { networkNodes } from "@/lib/mock-data";
+import type { NetworkNode } from "@/types";
 
 const ICONS: Record<string, typeof Building2> = {
   office: Building2,
@@ -12,7 +12,7 @@ const ICONS: Record<string, typeof Building2> = {
   servers: Server,
 };
 
-const CONNECTIONS: [string, string][] = [
+const DEFAULT_CONNECTIONS: [string, string][] = [
   ["office", "network"],
   ["network", "cloud"],
   ["network", "datacenter"],
@@ -20,7 +20,17 @@ const CONNECTIONS: [string, string][] = [
   ["datacenter", "cloud"],
 ];
 
-export function NetworkMap() {
+export function NetworkMap({
+  nodes = [],
+  connections = DEFAULT_CONNECTIONS,
+  loading = false,
+  error = false,
+}: {
+  nodes?: NetworkNode[];
+  connections?: [string, string][];
+  loading?: boolean;
+  error?: boolean;
+}) {
   const [active, setActive] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const [width, setWidth] = useState(1024);
@@ -36,33 +46,52 @@ export function NetworkMap() {
     };
   }, []);
 
+  if (error) {
+    return (
+      <div className="flex h-[480px] sm:h-[520px] w-full items-center justify-center text-sm text-text-2 border border-border-1 bg-bg-1/40 rounded-xl">
+        Unable to load network map data
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex h-[480px] sm:h-[520px] w-full items-center justify-center text-sm text-text-2 border border-border-1 bg-bg-1/40 rounded-xl animate-pulse">
+        Loading network map data...
+      </div>
+    );
+  }
+
+  if (nodes.length === 0) {
+    return (
+      <div className="flex h-[480px] sm:h-[520px] w-full items-center justify-center text-sm text-text-2 border border-border-1 bg-bg-1/40 rounded-xl">
+        No network data available
+      </div>
+    );
+  }
+
   const getCoords = (nodeId: string) => {
-    const node = networkNodes.find((n) => n.id === nodeId);
+    const node = nodes.find((n) => n.id === nodeId);
     if (!node) return { x: 50, y: 50 };
     if (!mounted) return { x: node.x, y: node.y };
 
     const isDesktop = width >= 1024;
     if (isDesktop) return { x: node.x, y: node.y };
 
-    // Compute bounds based on viewport size to prevent card clipping
-    const sidebarWidth = 0; // Mobile has drawer menu
+    const sidebarWidth = 0;
     const parentPadding = width >= 768 ? 48 : 32;
     const availableWidth = Math.max(300, width - sidebarWidth - parentPadding);
-    const cardHalfWidth = width >= 640 ? 80 : 64; // w-40 is 160px, w-32 is 128px
+    const cardHalfWidth = width >= 640 ? 80 : 64;
 
     const minPct = (cardHalfWidth / availableWidth) * 100;
     const maxPct = ((availableWidth - cardHalfWidth) / availableWidth) * 100;
 
-    // Scale coordinates to fit safely inside the container bounds
     const scaledX = minPct + (node.x / 100) * (maxPct - minPct);
     
-    // Adjust vertical coordinates slightly to distribute nodes cleanly on mobile
     let scaledY = node.y;
     if (width < 640) {
-      // Stretch/compress y coordinates slightly to make the visualization clean
       scaledY = 12 + (node.y / 100) * 76;
       
-      // Fine-tune individual node overlaps on mobile
       if (node.id === "cloud") scaledY = 14;
       if (node.id === "network") scaledY = 32;
       if (node.id === "office") scaledY = 52;
@@ -73,7 +102,7 @@ export function NetworkMap() {
     return { x: scaledX, y: scaledY };
   };
 
-  const responsiveNodes = networkNodes.map((n) => ({
+  const responsiveNodes = nodes.map((n) => ({
     ...n,
     ...getCoords(n.id),
   }));
@@ -83,7 +112,7 @@ export function NetworkMap() {
   return (
     <div className="relative h-[480px] sm:h-[520px] w-full overflow-hidden rounded-xl border border-border-1 bg-[radial-gradient(circle_at_50%_30%,rgba(88,101,242,0.12),transparent_60%)]">
       <svg className="absolute inset-0 h-full w-full">
-        {CONNECTIONS.map(([a, b], i) => {
+        {connections.map(([a, b], i) => {
           const from = byId.get(a)!;
           const to = byId.get(b)!;
           if (!from || !to) return null;
@@ -104,7 +133,7 @@ export function NetworkMap() {
       </svg>
 
       {responsiveNodes.map((n) => {
-        const Icon = ICONS[n.id];
+        const Icon = ICONS[n.id] || Network;
         const isActive = active === n.id;
         return (
           <button

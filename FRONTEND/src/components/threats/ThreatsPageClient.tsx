@@ -5,8 +5,9 @@ import Link from "next/link";
 import { Search, SlidersHorizontal, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { SeverityBadge, StatusBadge } from "@/components/ui/Badge";
-import { threats } from "@/lib/mock-data";
 import type { Severity, ThreatStatus } from "@/types";
+import { useApi } from "@/hooks/useApi";
+import { getThreats } from "@/lib/api/threats";
 
 const SEVERITIES: (Severity | "All")[] = ["All", "Critical", "High", "Medium", "Low"];
 const STATUSES: (ThreatStatus | "All")[] = ["All", "Active", "Investigating", "Monitoring", "Contained", "Resolved"];
@@ -39,11 +40,15 @@ function FilterSelect<T extends string>({
 }
 
 export function ThreatsPageClient() {
+  const { data, loading, error } = useApi(getThreats);
+  const threats = useMemo(() => (Array.isArray(data) ? data : []), [data]);
+
   const [query, setQuery] = useState("");
   const [severity, setSeverity] = useState<Severity | "All">("All");
   const [status, setStatus] = useState<ThreatStatus | "All">("All");
   const [source, setSource] = useState<string>("All");
-  const sources = useMemo(() => ["All", ...Array.from(new Set(threats.map((t) => t.source)))], []);
+
+  const sources = useMemo(() => ["All", ...Array.from(new Set(threats.map((t) => t.source)))], [threats]);
 
   const filtered = useMemo(() => {
     return threats.filter((t) => {
@@ -53,7 +58,7 @@ export function ThreatsPageClient() {
       if (query && !`${t.name} ${t.asset} ${t.user}`.toLowerCase().includes(query.toLowerCase())) return false;
       return true;
     });
-  }, [query, severity, status, source]);
+  }, [threats, query, severity, status, source]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -91,33 +96,49 @@ export function ThreatsPageClient() {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((t) => (
-                <tr key={t.id} className="border-b border-border-1 last:border-0 hover:bg-white/[0.03]">
-                  <td className="px-5 py-3">
-                    <Link href={`/threats/${t.id}`} className="font-medium text-text-1 hover:text-primary">
-                      {t.name}
-                    </Link>
-                    <p className="text-xs text-text-2">{t.type}</p>
-                  </td>
-                  <td className="px-5 py-3"><SeverityBadge severity={t.severity} /></td>
-                  <td className="px-5 py-3 text-text-2">{t.asset}</td>
-                  <td className="px-5 py-3 text-text-2">{t.user}</td>
-                  <td className="px-5 py-3 text-text-1">{t.aiConfidence}%</td>
-                  <td className="px-5 py-3"><StatusBadge status={t.status} /></td>
-                  <td className="px-5 py-3 text-text-2 tabular-nums">{t.firstSeen}</td>
-                  <td className="px-5 py-3">
-                    <Link href={`/threats/${t.id}`}>
-                      <ChevronRight className="h-4 w-4 text-text-2 hover:text-text-1" />
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-              {filtered.length === 0 && (
+              {error ? (
                 <tr>
                   <td colSpan={8} className="px-5 py-10 text-center text-sm text-text-2">
-                    No threats match your filters.
+                    Unable to load active threats
                   </td>
                 </tr>
+              ) : loading ? (
+                <tr>
+                  <td colSpan={8} className="px-5 py-10 text-center text-sm text-text-2 animate-pulse">
+                    Loading active threats...
+                  </td>
+                </tr>
+              ) : (
+                <>
+                  {filtered.map((t) => (
+                    <tr key={t.id} className="border-b border-border-1 last:border-0 hover:bg-white/[0.03]">
+                      <td className="px-5 py-3">
+                        <Link href={`/threats/${t.id}`} className="font-medium text-text-1 hover:text-primary">
+                          {t.name}
+                        </Link>
+                        <p className="text-xs text-text-2">{t.type}</p>
+                      </td>
+                      <td className="px-5 py-3"><SeverityBadge severity={t.severity} /></td>
+                      <td className="px-5 py-3 text-text-2">{t.asset}</td>
+                      <td className="px-5 py-3 text-text-2">{t.user}</td>
+                      <td className="px-5 py-3 text-text-1">{t.aiConfidence}%</td>
+                      <td className="px-5 py-3"><StatusBadge status={t.status} /></td>
+                      <td className="px-5 py-3 text-text-2 tabular-nums">{t.firstSeen}</td>
+                      <td className="px-5 py-3">
+                        <Link href={`/threats/${t.id}`}>
+                          <ChevronRight className="h-4 w-4 text-text-2 hover:text-text-1" />
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                  {filtered.length === 0 && (
+                    <tr>
+                      <td colSpan={8} className="px-5 py-10 text-center text-sm text-text-2">
+                        {threats.length === 0 ? "No active threats" : "No threats match your filters."}
+                      </td>
+                    </tr>
+                  )}
+                </>
               )}
             </tbody>
           </table>

@@ -5,12 +5,29 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import { ThreatChart } from "@/components/dashboard/ThreatChart";
 import { PredictionList } from "@/components/dashboard/PredictionList";
 import { Card, CardHeader } from "@/components/ui/Card";
-import { kpis, predictions } from "@/lib/mock-data";
 import { Shield, RefreshCw } from "lucide-react";
 
+const marketingKpis = [
+  { label: "Security Score", value: "87", suffix: "/100", trend: "Good", trendDir: "flat" as const, tone: "success" as const },
+  { label: "Active Threats", value: "12", trend: "22%", trendDir: "down" as const, tone: "danger" as const },
+  { label: "Critical Incidents", value: "3", trend: "30%", trendDir: "down" as const, tone: "danger" as const },
+];
+
+const marketingPredictions = [
+  { label: "Lateral Movement", probability: 87, trend: "up" as const },
+  { label: "Data Exfiltration", probability: 64, trend: "up" as const },
+  { label: "Account Takeover", probability: 41, trend: "flat" as const },
+  { label: "Privilege Escalation", probability: 33, trend: "down" as const },
+];
+
+const marketingThreatActivity = [
+  { time: "00:00", events: 14 }, { time: "02:00", events: 9 }, { time: "04:00", events: 6 },
+  { time: "06:00", events: 11 }, { time: "08:00", events: 22 }, { time: "10:00", events: 31 },
+  { time: "12:00", events: 27 }, { time: "14:00", events: 38 }, { time: "16:00", events: 33 },
+  { time: "18:00", events: 24 }, { time: "20:00", events: 18 }, { time: "22:00", events: 15 },
+];
+
 export default function DashboardShowcase() {
-  // We take 3 relevant KPIs for the landing page mockup
-  const selectedKpis = kpis.slice(0, 3);
 
   return (
     <section className="relative bg-[#08080D] py-24 md:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-white/5">
@@ -85,7 +102,7 @@ export default function DashboardShowcase() {
             <div className="flex flex-col gap-5">
               {/* KPIs row */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {selectedKpis.map((k) => (
+                {marketingKpis.map((k) => (
                   <StatCard key={k.label} {...k} />
                 ))}
               </div>
@@ -96,7 +113,7 @@ export default function DashboardShowcase() {
                 <Card className="lg:col-span-2">
                   <CardHeader title="Live Threat Activity" subtitle="Security events observed across the last 24 hours" />
                   <div className="px-2 pb-4 pt-2">
-                    <ThreatChart />
+                    <ThreatChart data={marketingThreatActivity} />
                   </div>
                 </Card>
 
@@ -104,7 +121,7 @@ export default function DashboardShowcase() {
                 <Card>
                   <CardHeader title="AI Predictions" subtitle="Likelihood of next attacker action" />
                   <div className="p-5 pt-4">
-                    <PredictionList predictions={predictions} />
+                    <PredictionList predictions={marketingPredictions} />
                   </div>
                 </Card>
               </div>

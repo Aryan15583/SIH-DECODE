@@ -16,36 +16,39 @@ export function StatCard({
   value,
   suffix,
   trend,
-  trendDir,
-  tone,
+  trendDir = "flat",
+  tone = "primary",
 }: {
   label: string;
-  value: string;
+  value: string | null | undefined;
   suffix?: string;
-  trend: string;
-  trendDir: "up" | "down" | "flat";
-  tone: Tone;
+  trend?: string;
+  trendDir?: "up" | "down" | "flat";
+  tone?: Tone;
 }) {
   const Icon = trendDir === "up" ? ArrowUp : trendDir === "down" ? ArrowDown : Minus;
   const trendGood = tone === "danger" || tone === "warning" ? trendDir === "down" : trendDir !== "down";
+  const displayValue = value ?? "—";
 
   return (
     <Card className="p-4">
       <p className="text-xs font-medium text-text-2">{label}</p>
       <div className="mt-2 flex items-end justify-between">
         <div className="flex items-baseline gap-1">
-          <span className="text-[26px] font-bold leading-none text-text-1">{value}</span>
-          {suffix && <span className="text-sm text-text-2">{suffix}</span>}
+          <span className="text-[26px] font-bold leading-none text-text-1">{displayValue}</span>
+          {suffix && value && <span className="text-sm text-text-2">{suffix}</span>}
         </div>
-        <span
-          className={cn(
-            "flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[11px] font-semibold",
-            trendGood ? toneRing.success : toneRing.danger
-          )}
-        >
-          <Icon className="h-3 w-3" />
-          {trend}
-        </span>
+        {trend && (
+          <span
+            className={cn(
+              "flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[11px] font-semibold",
+              trendGood ? toneRing.success : toneRing.danger
+            )}
+          >
+            <Icon className="h-3 w-3" />
+            {trend}
+          </span>
+        )}
       </div>
       <div className={cn("mt-3 h-1 w-full rounded-full", toneRing[tone])} />
     </Card>

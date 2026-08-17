@@ -1,4 +1,5 @@
 import { ShieldHalf } from "lucide-react";
+import type { Report } from "@/types";
 
 const breakdown = [
   { label: "Ransomware Behavior", pct: 28, color: "bg-danger" },
@@ -9,7 +10,44 @@ const breakdown = [
   { label: "Other", pct: 7, color: "bg-text-2" },
 ];
 
-export function ReportPreview() {
+export function ReportPreview({
+  reports = [],
+  loading = false,
+  error = false,
+}: {
+  reports?: Report[];
+  loading?: boolean;
+  error?: boolean;
+}) {
+  const hasReports = reports.length > 0;
+
+  if (error) {
+    return (
+      <div className="rounded-xl border border-border-1 bg-bg-1/60 p-8 flex flex-col items-center justify-center min-h-[280px] text-center">
+        <ShieldHalf className="h-6 w-6 text-text-2 opacity-50" strokeWidth={1.5} />
+        <p className="mt-3 text-xs text-text-2">Unable to load reports</p>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="rounded-xl border border-border-1 bg-bg-1/60 p-8 flex flex-col items-center justify-center min-h-[280px] text-center animate-pulse">
+        <ShieldHalf className="h-6 w-6 text-text-2 opacity-50" strokeWidth={1.5} />
+        <p className="mt-3 text-xs text-text-2">Loading reports...</p>
+      </div>
+    );
+  }
+
+  if (!hasReports) {
+    return (
+      <div className="rounded-xl border border-border-1 bg-bg-1/60 p-8 flex flex-col items-center justify-center min-h-[280px] text-center">
+        <ShieldHalf className="h-6 w-6 text-text-2 opacity-50" strokeWidth={1.5} />
+        <p className="mt-3 text-xs text-text-2">No reports available</p>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-xl border border-border-1 bg-bg-1/60 p-4">
       <div className="flex items-center gap-2 border-b border-border-1 pb-3">

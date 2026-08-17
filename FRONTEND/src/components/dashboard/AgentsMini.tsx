@@ -1,8 +1,28 @@
-import { agents } from "@/lib/mock-data";
 import { getAgentIcon } from "@/components/agents/agent-icons";
 import { StatusBadge } from "@/components/ui/Badge";
+import type { Agent } from "@/types";
 
-export function AgentsMini() {
+export function AgentsMini({
+  agents = [],
+  loading = false,
+  error = false,
+}: {
+  agents?: Agent[];
+  loading?: boolean;
+  error?: boolean;
+}) {
+  if (error) {
+    return <p className="text-center text-xs text-text-2 py-4">Unable to load agents</p>;
+  }
+
+  if (loading) {
+    return <p className="text-center text-xs text-text-2 py-4 animate-pulse">Loading agents...</p>;
+  }
+
+  if (agents.length === 0) {
+    return <p className="text-center text-xs text-text-2 py-4">No agent activity</p>;
+  }
+
   return (
     <div className="flex flex-col gap-2.5">
       {agents.slice(0, 5).map((a) => {

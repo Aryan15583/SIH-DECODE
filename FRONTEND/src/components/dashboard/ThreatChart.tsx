@@ -1,12 +1,43 @@
 "use client";
 
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { liveThreatActivity } from "@/lib/mock-data";
 
-export function ThreatChart() {
+export function ThreatChart({
+  data = [],
+  loading = false,
+  error = false,
+}: {
+  data?: { time: string; events: number }[];
+  loading?: boolean;
+  error?: boolean;
+}) {
+  if (error) {
+    return (
+      <div className="flex h-[260px] w-full items-center justify-center text-sm text-text-2 border border-border-1 border-dashed rounded-lg bg-bg-1/40">
+        Unable to load threat activity
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex h-[260px] w-full items-center justify-center text-sm text-text-2 border border-border-1 border-dashed rounded-lg bg-bg-1/40 animate-pulse">
+        Loading threat activity...
+      </div>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className="flex h-[260px] w-full items-center justify-center text-sm text-text-2 border border-border-1 border-dashed rounded-lg bg-bg-1/40">
+        No data available
+      </div>
+    );
+  }
+
   return (
     <ResponsiveContainer width="100%" height={260}>
-      <AreaChart data={liveThreatActivity} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
+      <AreaChart data={data} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
         <defs>
           <linearGradient id="threatFill" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#5865f2" stopOpacity={0.45} />

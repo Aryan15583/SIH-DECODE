@@ -81,10 +81,10 @@ export default function SettingsPage() {
           <Card>
             <CardHeader title="Profile" subtitle="Manage your personal account details" />
             <div className="grid grid-cols-1 gap-4 p-5 pt-3 sm:grid-cols-2">
-              <Field label="Full Name" defaultValue="John Doe" />
-              <Field label="Email" defaultValue="john.doe@aegissoc.ai" type="email" />
-              <Field label="Role" defaultValue="Security Admin" />
-              <Field label="Phone" defaultValue="+1 555-123-4567" />
+              <Field label="Full Name" defaultValue="" />
+              <Field label="Email" defaultValue="" type="email" />
+              <Field label="Role" defaultValue="" />
+              <Field label="Phone" defaultValue="" />
             </div>
             <div className="flex justify-end gap-2 border-t border-border-1 p-5">
               <Button variant="primary" onClick={() => push("Profile updated", "Your changes have been saved.", "success")}>
@@ -98,10 +98,10 @@ export default function SettingsPage() {
           <Card>
             <CardHeader title="Organization" subtitle="Company-wide configuration" />
             <div className="grid grid-cols-1 gap-4 p-5 pt-3 sm:grid-cols-2">
-              <Field label="Organization Name" defaultValue="Northwind Security" />
-              <Field label="Primary Domain" defaultValue="northwind.io" />
-              <Field label="Time Zone" defaultValue="UTC" />
-              <Field label="Seats" defaultValue="42" />
+              <Field label="Organization Name" defaultValue="" />
+              <Field label="Primary Domain" defaultValue="" />
+              <Field label="Time Zone" defaultValue="" />
+              <Field label="Seats" defaultValue="—" />
             </div>
           </Card>
         )}
