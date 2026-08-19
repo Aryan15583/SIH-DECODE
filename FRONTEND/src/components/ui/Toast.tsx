@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useState } from "react";
 import { CheckCircle2, Info, TriangleAlert, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type ToastTone = "success" | "info" | "warning";
+type ToastTone = "success" | "info" | "warning" | "error";
 interface ToastItem {
   id: number;
   title: string;
@@ -28,6 +28,7 @@ const toneStyles: Record<ToastTone, { icon: React.ReactNode; border: string }> =
   success: { icon: <CheckCircle2 className="h-4 w-4 text-success" />, border: "border-success/30" },
   info: { icon: <Info className="h-4 w-4 text-cyber" />, border: "border-cyber/30" },
   warning: { icon: <TriangleAlert className="h-4 w-4 text-warning" />, border: "border-warning/30" },
+  error: { icon: <TriangleAlert className="h-4 w-4 text-danger" />, border: "border-danger/30" },
 };
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {

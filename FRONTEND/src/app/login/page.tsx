@@ -3,12 +3,69 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Shield, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { Shield, Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react";
+import { client } from "@/lib/api/client";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [showPw, setShowPw] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg("");
+    setLoading(true);
+
+    try {
+      if (isLogin) {
+        // 1. Submit Login to Backend
+        const response = await client.post<{ access_token: string; name: string; role: string }>(
+          "/api/auth/login",
+          { email, password }
+        );
+
+        if (response && response.access_token) {
+          localStorage.setItem("aegis_auth", "true");
+          localStorage.setItem("aegis_token", response.access_token);
+          window.dispatchEvent(new Event("aegis_auth_change"));
+          router.push("/dashboard");
+        } else {
+          setErrorMsg("Failed to authenticate user.");
+        }
+      } else {
+        // 2. Submit Registration to Backend
+        await client.post("/api/auth/register", {
+          name,
+          email,
+          password,
+          role: "analyst"
+        });
+
+        // 3. Auto-Login after registration
+        const loginResponse = await client.post<{ access_token: string }>(
+          "/api/auth/login",
+          { email, password }
+        );
+
+        if (loginResponse && loginResponse.access_token) {
+          localStorage.setItem("aegis_auth", "true");
+          localStorage.setItem("aegis_token", loginResponse.access_token);
+          window.dispatchEvent(new Event("aegis_auth_change"));
+          router.push("/dashboard");
+        }
+      }
+    } catch (err: any) {
+      console.error(err);
+      setErrorMsg(err.message || "An authentication error occurred. Please verify database connection.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#050507] px-4 font-sans text-[#F5F5F7]">
@@ -46,7 +103,10 @@ export default function LoginPage() {
         {/* Dynamic Tab Switcher */}
         <div className="grid grid-cols-2 p-1 bg-[#050507] border border-white/5 rounded-xl mb-6 select-none">
           <button
-            onClick={() => setIsLogin(true)}
+            onClick={() => {
+              setIsLogin(true);
+              setErrorMsg("");
+            }}
             className={`py-2 text-xs font-semibold tracking-wide rounded-lg transition-all cursor-pointer ${
               isLogin ? "bg-[#0D0D14] text-[#F5F5F7] border border-white/5 shadow-sm" : "text-[#92929F] hover:text-[#F5F5F7]"
             }`}
@@ -54,7 +114,10 @@ export default function LoginPage() {
             Sign In
           </button>
           <button
-            onClick={() => setIsLogin(false)}
+            onClick={() => {
+              setIsLogin(false);
+              setErrorMsg("");
+            }}
             className={`py-2 text-xs font-semibold tracking-wide rounded-lg transition-all cursor-pointer ${
               !isLogin ? "bg-[#0D0D14] text-[#F5F5F7] border border-white/5 shadow-sm" : "text-[#92929F] hover:text-[#F5F5F7]"
             }`}
@@ -63,23 +126,24 @@ export default function LoginPage() {
           </button>
         </div>
 
+        {/* Error message block */}
+        {errorMsg && (
+          <div className="mb-4 rounded-lg bg-danger/10 border border-danger/20 p-3 text-xs text-danger font-medium">
+            {errorMsg}
+          </div>
+        )}
+
         {/* Input Form */}
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            localStorage.setItem("aegis_auth", "true");
-            window.dispatchEvent(new Event("aegis_auth_change"));
-            router.push("/dashboard");
-          }}
-        >
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           {!isLogin && (
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-[#92929F]">Organization Name</label>
+              <label className="mb-1.5 block text-xs font-medium text-[#92929F]">Full Name</label>
               <input
                 type="text"
-                placeholder="Aegis Corp"
+                placeholder="Security Analyst"
                 required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full rounded-lg border border-white/8 bg-[#050507] px-3.5 py-2.5 text-xs text-[#F5F5F7] placeholder:text-[#92929F]/60 outline-none focus:border-[#A78BFA]/50 transition-colors"
               />
             </div>
@@ -91,7 +155,8 @@ export default function LoginPage() {
               type="email"
               placeholder="you@company.com"
               required
-              defaultValue={""}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full rounded-lg border border-white/8 bg-[#050507] px-3.5 py-2.5 text-xs text-[#F5F5F7] placeholder:text-[#92929F]/60 outline-none focus:border-[#A78BFA]/50 transition-colors"
             />
           </div>
@@ -110,7 +175,8 @@ export default function LoginPage() {
                 type={showPw ? "text" : "password"}
                 placeholder="••••••••"
                 required
-                defaultValue={""}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-lg border border-white/8 bg-[#050507] px-3.5 py-2.5 pr-10 text-xs text-[#F5F5F7] placeholder:text-[#92929F]/60 outline-none focus:border-[#A78BFA]/50 transition-colors"
               />
               <button
@@ -125,10 +191,17 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="mt-2 inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#8B5CF6] hover:bg-[#7c4dff] text-white font-semibold text-xs shadow-[0_0_20px_rgba(139,92,246,0.25)] hover:shadow-[0_0_30px_rgba(139,92,246,0.45)] transition-all duration-300 cursor-pointer group"
+            disabled={loading}
+            className="mt-2 inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#8B5CF6] hover:bg-[#7c4dff] disabled:opacity-50 text-white font-semibold text-xs shadow-[0_0_20px_rgba(139,92,246,0.25)] hover:shadow-[0_0_30px_rgba(139,92,246,0.45)] transition-all duration-300 cursor-pointer group"
           >
-            {isLogin ? "Sign In" : "Create Account"}
-            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+            {loading ? (
+              <Loader2 className="h-4 w-4 animate-spin text-white" />
+            ) : isLogin ? (
+              "Sign In"
+            ) : (
+              "Create Account"
+            )}
+            {!loading && <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />}
           </button>
         </form>
 
@@ -167,7 +240,10 @@ export default function LoginPage() {
         <p className="mt-8 text-center text-xs text-[#92929F]">
           {isLogin ? "Don&apos;t have an account? " : "Already have an account? "}
           <button
-            onClick={() => setIsLogin(!isLogin)}
+            onClick={() => {
+              setIsLogin(!isLogin);
+              setErrorMsg("");
+            }}
             className="text-[#A78BFA] font-semibold hover:underline cursor-pointer"
           >
             {isLogin ? "Register" : "Sign In"}
@@ -205,4 +281,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

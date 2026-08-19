@@ -135,14 +135,17 @@ export interface RiskData {
 export interface NetworkNode {
   id: string;
   label: string;
-  sub: string;
+  sub?: string;
   x: number;
   y: number;
+  type?: string;
+  critical?: boolean;
 }
 
 export interface NetworkConnection {
   from: string;
   to: string;
+  severity?: Severity;
 }
 
 export interface NetworkData {

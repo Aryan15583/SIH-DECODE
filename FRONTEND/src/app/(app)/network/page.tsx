@@ -12,7 +12,7 @@ export default function NetworkMapPage() {
   const { data, loading, error } = useApi(getNetwork);
 
   const nodes = data?.nodes || [];
-  const connections = data?.connections ? data.connections.map(c => [c.from, c.to] as [string, string]) : undefined;
+  const connections = data?.connections || [];
 
   const hasData = nodes.length > 0 && !error && !loading;
 
@@ -29,7 +29,7 @@ export default function NetworkMapPage() {
         </span>
       </Card>
       <Card className="p-4">
-        <NetworkMap nodes={nodes} connections={connections} loading={loading} error={!!error} />
+        <NetworkMap nodes={nodes} connections={connections} view={view} loading={loading} error={!!error} />
       </Card>
     </div>
   );

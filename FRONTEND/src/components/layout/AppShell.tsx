@@ -16,6 +16,7 @@ const TITLES: Record<string, { title: string; subtitle: string }> = {
   "/network": { title: "Network Map", subtitle: "Live infrastructure and connectivity overview" },
   "/reports": { title: "Reports", subtitle: "Generate and review AI-powered security reports" },
   "/settings": { title: "Settings", subtitle: "Manage your account, organization and platform" },
+  "/database": { title: "Database Console", subtitle: "Inspect active database tables, columns, and records in real-time" },
 };
 
 export function AppShell({ children }: { children: React.ReactNode }) {

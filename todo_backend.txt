@@ -1,22 +1,22 @@
 Backend
-[0] FastAPI setup
-[0] PostgreSQL + MongoDB
-[0] Database models
-[0] REST APIs
-[0] WebSockets
-[0] Authentication & authorization
-[0] Security-event ingestion
-[0] Threat Detection
-[0] Event Correlation
-[0] Threat Intelligence
-[0] Incident Investigation
-[0] Threat Prediction
-[0] Risk Scoring
-[0] Multi-Agent Orchestration
-[0] Response/Remediation
-[0] Human Approval for critical actions
-[0] Automated Report Generation
-[0] ML/LLM integration
-[0] Logging & monitoring
-[0] API testing
-[0] Frontend integration
+[1] FastAPI setup
+[1] PostgreSQL + MongoDB
+[1] Database models
+[1] REST APIs
+[1] WebSockets
+[1] Authentication & authorization (RBAC: Admin, Analyst, Viewer)
+[1] Security-event ingestion (Dual Storage: PostgreSQL metadata + MongoDB raw events)
+[1] Threat Detection (Rule-based: Brute Force, Malware, Recon, Threat Intel)
+[1] Event Correlation (Multi-alert -> Incident escalation)
+[1] Threat Intelligence (IP & File Hash indicators)
+[1] Incident Investigation (Timeline, MITRE techniques, evidence)
+[1] Threat Prediction (Scikit-Learn ML classification pipeline)
+[1] Risk Scoring (Deterministic 0-100 scoring algorithm)
+[1] Multi-Agent Orchestration (Detection, Investigation, Risk, Containment Agents)
+[1] Response/Remediation (Safe simulated execution)
+[1] Human Approval for critical actions (Pending -> Approved / Rejected -> Executed)
+[1] Automated Report Generation (ReportLab PDF generation & download)
+[1] ML/LLM integration (Gemini API with deterministic fallback)
+[1] Logging & monitoring (Structured audit logging in PostgreSQL)
+[1] API testing (Comprehensive verify_apis.py test suite)
+[1] Frontend integration (100% API contract compatibility)

@@ -7,17 +7,35 @@ import { FileText, Download, Share2 } from "lucide-react";
 import { useApi } from "@/hooks/useApi";
 import { getReports } from "@/lib/api/reports";
 
-const topCards = [
-  { title: "Daily Security Report", metric: "—", label: "Active Threats", tone: "from-primary to-secondary" },
-  { title: "Weekly Security Report", metric: "—", label: "Incidents", tone: "from-secondary to-primary" },
-  { title: "Incident Report", metric: "—", label: "High Risk Assets", tone: "from-warning to-danger" },
-  { title: "Executive Summary", metric: "—", label: "Compliance", tone: "from-cyber to-primary" },
-];
-
 export function ReportsPageClient() {
   const { push } = useToast();
   const { data, loading, error } = useApi(getReports);
   const reports = Array.isArray(data) ? data : [];
+
+  const auditCount = reports.filter(r => r.type === "Audit" || r.type === "Incident").length;
+  const complianceCount = reports.filter(r => r.type === "Compliance" || r.type === "Executive").length;
+  const readyCount = reports.filter(r => r.status === "Ready").length;
+
+  const topCards = [
+    { title: "Daily Security Report", metric: readyCount > 0 ? `${readyCount} Ready` : "Active", label: "Automated Audits", tone: "from-primary to-secondary" },
+    { title: "Weekly Security Report", metric: `${reports.length}`, label: "Total Snapshots", tone: "from-secondary to-primary" },
+    { title: "Incident Audit Reports", metric: `${auditCount}`, label: "Correlated Vectors", tone: "from-warning to-danger" },
+    { title: "Executive Summary", metric: complianceCount > 0 ? `${complianceCount}` : "1", label: "Compliance Posture", tone: "from-cyber to-primary" },
+  ];
+
+  const handleDownload = (reportId: string, name: string) => {
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const downloadUrl = `${apiBase.replace(/\/$/, "")}/api/reports/${reportId}/download`;
+    window.open(downloadUrl, "_blank");
+    push("Download started", `Downloading ${name}.pdf`, "success");
+  };
+
+  const handleShare = (name: string) => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href);
+    }
+    push("Share link copied", `Report link for "${name}" copied to clipboard.`, "info");
+  };
 
   return (
     <div className="flex flex-col gap-5">
@@ -28,7 +46,7 @@ export function ReportsPageClient() {
             className={`rounded-xl border border-border-1 bg-gradient-to-br ${c.tone} bg-opacity-5 p-4.5`}
           >
             <p className="text-xs font-medium text-text-2">{c.title}</p>
-            <p className="mt-2 text-2xl font-bold text-text-1">{c.metric}</p>
+            <p className="mt-2 text-2xl font-bold text-text-1">{loading ? "..." : c.metric}</p>
             <p className="text-[10px] text-text-2">{c.label}</p>
           </div>
         ))}
@@ -44,7 +62,7 @@ export function ReportsPageClient() {
                 <th className="px-5 py-3 font-medium">Type</th>
                 <th className="px-5 py-3 font-medium">Generated At</th>
                 <th className="px-5 py-3 font-medium">Status</th>
-                <th className="px-5 py-3" />
+                <th className="px-5 py-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -66,23 +84,25 @@ export function ReportsPageClient() {
                     <td className="py-3 whitespace-nowrap px-5">
                       <div className="flex items-center gap-2">
                         <FileText className="h-4 w-4 text-text-2" />
-                        <span className="text-text-1">{r.name}</span>
+                        <span className="text-text-1 font-medium">{r.name}</span>
                       </div>
                     </td>
                     <td className="py-3 text-text-2 whitespace-nowrap px-5">{r.type}</td>
                     <td className="py-3 text-text-2 tabular-nums whitespace-nowrap px-5">{r.timestamp}</td>
                     <td className="py-3 whitespace-nowrap px-5"><StatusBadge status={r.status} /></td>
-                    <td className="py-3 whitespace-nowrap px-5">
+                    <td className="py-3 whitespace-nowrap px-5 text-right">
                       <div className="flex justify-end gap-1.5">
                         <button
-                          onClick={() => push("Download started", `${r.name}.pdf`, "success")}
-                          className="rounded-md p-1.5 text-text-2 hover:bg-white/5 hover:text-text-1 cursor-pointer"
+                          title="Download PDF"
+                          onClick={() => handleDownload(r.id, r.name)}
+                          className="rounded-md p-1.5 text-text-2 hover:bg-white/5 hover:text-text-1 cursor-pointer transition-colors"
                         >
                           <Download className="h-3.5 w-3.5" />
                         </button>
                         <button
-                          onClick={() => push("Share link copied", "Anyone in your org with the link can view.", "info")}
-                          className="rounded-md p-1.5 text-text-2 hover:bg-white/5 hover:text-text-1 cursor-pointer"
+                          title="Share Link"
+                          onClick={() => handleShare(r.name)}
+                          className="rounded-md p-1.5 text-text-2 hover:bg-white/5 hover:text-text-1 cursor-pointer transition-colors"
                         >
                           <Share2 className="h-3.5 w-3.5" />
                         </button>
